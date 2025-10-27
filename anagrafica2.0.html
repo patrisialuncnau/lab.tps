@@ -1,94 +1,91 @@
 <!DOCTYPE html>
 <html lang="it">
-    <head>
-        <meta charset="UTF-8">
-        <title>Registrazione dati</title>
-        <link rel="stylesheet" href="stile.css">
-    </head>
-    <body>
-        <div class="card">
-            <div class="form-area">
-                <h2>Inserisci i tuoi dati</h2>
-                <div class="input-grid">
-                    <label for="nome">Nome:</label>
-                    <input type="text" id="nome">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrazione dati</title>
+  <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+  <div class="card">
+    <div class="form-area">
+      <h2>Inserisci i tuoi dati</h2>
+      <div class="input-grid">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome">
 
-                    <label for="cognome">Cognome:</label>
-                    <input type="text" id="cognome">
+        <label for="cognome">Cognome:</label>
+        <input type="text" id="cognome">
 
-                    <label for="indirizzo">Indirizzo:</label>
-                    <input type="text" id="indirizzo">
-                    
-                    <label for="citta">Città:</label>
-                    <input type="text" id="citta">
-                    
-                    <label for="cap">CAP:</label>
-                    <input type="text" id="cap">
-                    
-                    <label for="anno">Anno di nascita:</label>
-                    <input type="number" id="anno" min="1900" max="2025">
-                    
-                    <div class="actions">
-                        <button onclick="stampaDati()">Invia</button>
-                    </div>
-                </div>
-            </div>
-            <div id="output"></div>
+        <label for="indirizzo">Indirizzo:</label>
+        <input type="text" id="indirizzo">
+
+        <label for="citta">Città:</label>
+        <input type="text" id="citta">
+
+        <label for="cap">CAP:</label>
+        <input type="text" id="cap">
+
+        <label for="anno">Anno di nascita:</label>
+        <input type="number" id="anno" min="1900" max="2025">
+
+        <div class="actions">
+          <button onclick="stampaDati()">Invia</button>
         </div>
-        
-        <script>
-        function stampaDati() {
-            // Array vuoto in cui inserire i dati
-            const dati = [];
-            // Inserimento dei dati usando push
-            dati.push({label: "Nome", value: document.getElementById("nome").value.trim()});
-            dati.push({label: "Cognome", value: document.getElementById("cognome").value.trim()});
-            dati.push({label: "Indirizzo", value: document.getElementById("indirizzo").value.trim()});
-            dati.push({label: "Città", value: document.getElementById("citta").value.trim()});
-            dati.push({label: "CAP", value: document.getElementById("cap").value.trim()});
-            dati.push({label: "Anno di nascita", value: parseInt(document.getElementById("anno").value.trim())});
-            
-            // Controllo campi minimi
-            if (!dati[0].value || !dati[1].value || isNaN(dati[5].value)) {
-                alert("Compila almeno Nome, Cognome e Anno di nascita!");
-                return;
-            }
-            
-            // Calcolo generazione
-            const anno = dati[5].value;
-            let gen = "";
-            switch (true) {
-                case (annoNascita >= 1901 && annoNascita <= 1927):
-                    generazione = "Greatest Generation";
-                    break;
-                case (annoNascita >= 1928 && annoNascita <= 1945):
-                    generazione = "Generazione Silenziosa";
-                    break;
-                case (annoNascita >= 1946 && annoNascita <= 1964):
-                    generazione = "Baby Boomers";
-                    break;
-                case (annoNascita >= 1965 && annoNascita <= 1980):
-                    generazione = "Generazione X";
-                    break;
-                case (annoNascita >= 1981 && annoNascita <= 1996):
-                    generazione = "Millennials";
-                    break;
-                case (annoNascita >= 1997 && annoNascita <= 2012):
-                    generazione = "Generazione Z";
-                    break;
-                case (annoNascita >= 2013):
-                    generazione = "Generazione Alpha";
-                    break;
-                default:
-                    generazione = "Anno non valido";
-            }
-            // Calcolo età
-            const eta = new Date().getFullYear() - anno;
-            // Stampa dei risultati
-            const outputDiv = document.getElementById("output");
-            outputDiv.style.display = "block";
-            outputDiv.innerHTML = dati.map(d => `<div><strong>${d.label}:</strong> ${d.value}</div>`).join("") + `<div><strong>Età:</strong> ${eta} anni</div> <div><strong>Generazione:</strong> ${gen}</div>`;
-        }
-        </script>
-    </body>
+      </div>
+    </div>
+
+    <div id="output"></div>
+  </div>
+
+  <script>
+    function stampaDati() {
+      const dati = [];
+      dati.push({label: "Nome", value: document.getElementById("nome").value.trim()});
+      dati.push({label: "Cognome", value: document.getElementById("cognome").value.trim()});
+      dati.push({label: "Indirizzo", value: document.getElementById("indirizzo").value.trim()});
+      dati.push({label: "Città", value: document.getElementById("citta").value.trim()});
+      dati.push({label: "Cap", value: document.getElementById("cap").value.trim()});
+      dati.push({label: "Anno di nascita", value: parseInt(document.getElementById("anno").value.trim())});
+
+      // Controllo campi minimi
+      if (!dati[0].value || !dati[1].value || isNaN(dati[5].value)) {
+        alert("Compila almeno Nome, Cognome e Anno di nascita");
+        return;
+      }
+
+      // Calcolo generazione
+      const anno = dati[5].value;
+      let generazioni = "";
+      switch (true) {
+        case (anno >= 1901 && anno <= 1927):
+          generazioni = "Greatest Generation";
+          break;
+        case (anno >= 1928 && anno <= 1945):
+          generazioni = "Generazione Silenziosa";
+          break;
+        case (anno >= 1946 && anno <= 1964):
+          generazioni = "Baby Boomers";
+          break;
+        case (anno >= 1965 && anno <= 1980):
+          generazioni = "Generazione X";
+          break;
+        case (anno >= 1981 && anno <= 1996):
+          generazioni = "Millennials";
+          break;
+        case (anno >= 1997 && anno <= 2012):
+          generazioni = "Generazione Z";
+          break;
+        case (anno >= 2013):
+          generazioni = "Generazione alpha";
+          break;
+        default:
+          generazioni = "Anno non valido o troppo lontano nel tempo";
+      }
+      const eta = new Date().getFullYear() - anno;
+      const outputDiv = document.getElementById("output");
+      outputDiv.style.display = "block";
+      outputDiv.innerHTML = dati.map(d => <div><strong>${d.label}:</strong> ${d.value}</div>).join("") + <div><strong>Età:</strong> ${eta} anni</div> <div><strong>Generazione:</strong> ${gen}</div>;
+    }
+  </script>
+</body>
 </html>
