@@ -46,14 +46,10 @@
       dati.push({label: "Città", value: document.getElementById("citta").value.trim()});
       dati.push({label: "Cap", value: document.getElementById("cap").value.trim()});
       dati.push({label: "Anno di nascita", value: parseInt(document.getElementById("anno").value.trim())});
-
-      // Controllo campi minimi
       if (!dati[0].value || !dati[1].value || isNaN(dati[5].value)) {
         alert("Compila almeno Nome, Cognome e Anno di nascita");
         return;
       }
-
-      // Calcolo generazione
       const anno = dati[5].value;
       let generazioni = "";
       switch (true) {
