@@ -1,63 +1,98 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esercizio Array Base</title>
+    <title>Array e Statistiche</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        .grid div {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .highlight {
+            background-color: #a0e7a0;
+    </style>
 </head>
 <body>
-
-<script>
-    //creiamo un array vuoto
-    let numeri = [];
-
-    //inseriamo 100 numeri casuali tra -100 e 100
-    for (let i = 0; i < 100; i++) {
-        let n = Math.floor(Math.random() * 201) - 100;
-        numeri.push(n);
-    }
-
-    //calcoliamo la somma
-    let somma = 0;
-    for (let i = 0; i < numeri.length; i++) {
-        somma = somma + numeri[i];
-    }
-
-    //calcoliamo la media
-    let media = somma / numeri.length;
-
-    //troviamo massimo e minimo
-    let massimo = numeri[0];
-    let minimo = numeri[0];
-    for (let i = 1; i < numeri.length; i++) {
-        if (numeri[i] > massimo) {
-            massimo = numeri[i];
+    <h2>Array di numeri casuali</h2>
+    <div id="arrayGrid" class="grid"></div>
+    <hr>
+    <h3>Risultati</h3>
+    <p id="stats"></p>
+    <hr>
+    <h2>Numeri pari maggiori di 50</h2>
+    <div id="evenGrid" class="grid"></div>
+    <script>
+        //genera array di 100 numeri casuali tra -100 e 100
+        const array = [];
+        for(let i = 0; i < 100; i++) {
+            //formula corretta: genera intero tra 0 e 200, poi sottrae 100
+            const num = Math.floor(Math.random() * 201) - 100;
+            array.push(num);
         }
-        if (numeri[i] < minimo) {
-            minimo = numeri[i];
+        //calcola media
+        let sum = 0;
+        for(let i = 0; i < array.length; i++) {
+            sum += array[i];
         }
-    }
-
-    //troviamo i numeri pari maggiori di 50
-    let numeriPari = [];
-    for (let i = 0; i < numeri.length; i++) {
-        if (numeri[i] > 50 && numeri[i] % 2 === 0) {
-            numeriPari.push(numeri[i]);
+        const media = sum / array.length;
+        //trova massimo e minimo
+        let massimo = array[0];
+        let minimo = array[0];
+        for(let i = 1; i < array.length; i++) {
+            if(array[i] > massimo) massimo = array[i];
+            if(array[i] < minimo) minimo = array[i];
         }
-    }
 
-    //mostriamo i risultati
-    document.write("<h2>Numeri generati:</h2>");
-    document.write(numeri.join(", ") + "<br><br>");
+        //numeri pari maggiori di 50
+        const evenNumbers = [];
+        for(let i = 0; i < array.length; i++) {
+            if(array[i] > 50 && array[i] % 2 === 0) {
+                evenNumbers.push(array[i]);
+            }
+        }
+        let gridHTML = "";
+        for(let i = 0; i < array.length; i++) {
+            const highlightClass = (array[i] === massimo || array[i] === minimo) ? "highlight" : "";
+            //correggi la sintassi della stringa: devi usare i template literal
+            gridHTML += <div class="${highlightClass}">${array[i]}</div>;
+        }
+        document.getElementById('arrayGrid').innerHTML = gridHTML;
 
-    document.write("<h3>Statistiche:</h3>");
-    document.write("Media: " + media.toFixed(2) + "<br>");
-    document.write("Massimo: " + massimo + "<br>");
-    document.write("Minimo: " + minimo + "<br><br>");
+        //mostra statistiche
+        document.getElementById('stats').innerHTML = `
+            *Media:* ${media.toFixed(2)}<br>
+            *Massimo:* ${massimo}<br>
+            *Minimo:* ${minimo}
+        `;
 
-    document.write("<h3>Numeri pari maggiori di 50:</h3>");
-    document.write(numeriPari.join(", "));
-</script>
+        //costruisci HTML della griglia dei numeri pari >50
+        let evenHTML = "";
+        if (evenNumbers.length > 0) {
+            for(let i = 0; i < evenNumbers.length; i++) {
+                //correggi la sintassi della stringa
+                evenHTML += <div>${evenNumbers[i]}</div>;
+            }
+        } else {
+            evenHTML = "<div>Nessun numero pari maggiore di 50 trovato in questo array.</div>";
+            //rimuovi il layout grid se non ci sono elementi
+            document.getElementById('evenGrid').style.display = 'block'; 
+        }
+        document.getElementById('evenGrid').innerHTML = evenHTML;
+
+    </script>
 
 </body>
 </html>
