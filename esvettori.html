@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio Array Base</title>
+</head>
+<body>
+
+<script>
+    //creiamo un array vuoto
+    let numeri = [];
+
+    //inseriamo 100 numeri casuali tra -100 e 100
+    for (let i = 0; i < 100; i++) {
+        let n = Math.floor(Math.random() * 201) - 100;
+        numeri.push(n);
+    }
+
+    //calcoliamo la somma
+    let somma = 0;
+    for (let i = 0; i < numeri.length; i++) {
+        somma = somma + numeri[i];
+    }
+
+    //calcoliamo la media
+    let media = somma / numeri.length;
+
+    //troviamo massimo e minimo
+    let massimo = numeri[0];
+    let minimo = numeri[0];
+    for (let i = 1; i < numeri.length; i++) {
+        if (numeri[i] > massimo) {
+            massimo = numeri[i];
+        }
+        if (numeri[i] < minimo) {
+            minimo = numeri[i];
+        }
+    }
+
+    //troviamo i numeri pari maggiori di 50
+    let numeriPari = [];
+    for (let i = 0; i < numeri.length; i++) {
+        if (numeri[i] > 50 && numeri[i] % 2 === 0) {
+            numeriPari.push(numeri[i]);
+        }
+    }
+
+    //mostriamo i risultati
+    document.write("<h2>Numeri generati:</h2>");
+    document.write(numeri.join(", ") + "<br><br>");
+
+    document.write("<h3>Statistiche:</h3>");
+    document.write("Media: " + media.toFixed(2) + "<br>");
+    document.write("Massimo: " + massimo + "<br>");
+    document.write("Minimo: " + minimo + "<br><br>");
+
+    document.write("<h3>Numeri pari maggiori di 50:</h3>");
+    document.write(numeriPari.join(", "));
+</script>
+
+</body>
+</html>
