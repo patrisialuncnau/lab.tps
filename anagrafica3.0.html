@@ -65,23 +65,28 @@
 <input type="checkbox" name="mezzi" value="Bicicletta"> Bicicletta<br>
 <input type="checkbox" name="mezzi" value="Monopattino"> Monopattino<br>
 
+
 <br>
 
 <label>Materie preferite (max 3):</label><br>
-<select id="materie" multiple size="6" onchange="limiteMaterie(this)">
+<select id="materie" multiple size="9" onchange="limiteMaterie(this)">
   <option value="Matematica">Matematica</option>
   <option value="Italiano">Italiano</option>
   <option value="Inglese">Inglese</option>
   <option value="Storia">Storia</option>
   <option value="Informatica">Informatica</option>
   <option value="Fisica">Fisica</option>
+  <option value="Biologia">Biologia</option>
+  <option value="Chimica">Chimica</option>
+  <option value="Arte">Arte</option>
 </select>
 <br><br>
 
 <button onclick="mostraDati()">Mostra Dati</button>
-<div id="risultato"></div>
 
+<div id="risultato"></div>
 <script>
+
 function limiteMaterie(select) {
   let count = 0;
   for (let opt of select.options) {
@@ -102,10 +107,13 @@ function mostraDati() {
   dati.push(document.getElementById("indirizzo").value.trim());
   dati.push(document.getElementById("citta").value.trim());
   dati.push(document.getElementById("cap").value.trim());
+
   let birth = document.getElementById("dataNascita").value;
   dati.push(birth);
+
   let anno = new Date(birth).getFullYear();
   let generazione = "";
+
   if (anno >= 1901 && anno <= 1927) generazione = "Greatest Generation";
   else if (anno >= 1928 && anno <= 1945) generazione = "Silent Generation";
   else if (anno >= 1946 && anno <= 1964) generazione = "Baby Boomers";
@@ -114,6 +122,7 @@ function mostraDati() {
   else if (anno >= 1997 && anno <= 2012) generazione = "Generazione Z";
   else if (anno >= 2013 && anno <= 2023) generazione = "Generazione Alpha";
   else generazione = "Anno non valido";
+
   let sesso = "";
   let radios = document.getElementsByName("sesso");
   for (let r of radios) {
@@ -141,9 +150,7 @@ function mostraDati() {
       materieSel.push(opt.value);
     }
   }
-
   dati.push(materieSel);
-
   document.getElementById("risultato").innerHTML =
     "<h3>Dati inseriti:</h3>" +
     "Nome: " + dati[0] + "<br>" +
@@ -159,8 +166,7 @@ function mostraDati() {
     "<b>Mezzi posseduti:</b> " + dati[8].join(", ") + "<br>" +
     "<b>Materie preferite:</b> " + dati[9].join(", ");
 }
-
 </script>
-
 </body>
 </html>
+
