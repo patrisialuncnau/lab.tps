@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Form Completo</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  label {
+    font-weight: bold;
+  }
+  input, select {
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+  #risultato {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #444;
+    background: #f1f1f1;
+  }
+</style>
+
+</head>
+<body>
+
+<h2>Inserisci i tuoi dati</h2>
+
+<label>Nome: </label>
+<input type="text" id="nome"><br>
+
+<label>Cognome: </label>
+<input type="text" id="cognome"><br>
+
+<label>Indirizzo: </label>
+<input type="text" id="indirizzo"><br>
+
+<label>Città: </label>
+<input type="text" id="citta"><br>
+
+<label>CAP: </label>
+<input type="text" id="cap"><br>
+
+<label>Data di nascita: </label>
+<input type="date" id="dataNascita"><br>
+
+<label>Sesso:</label><br>
+<input type="radio" name="sesso" value="Maschio"> Maschio<br>
+<input type="radio" name="sesso" value="Femmina"> Femmina<br><br>
+
+<label>Provincia:</label>
+<select id="provincia">
+  <option value="MI">Milano</option>
+  <option value="RM">Roma</option>
+  <option value="NA">Napoli</option>
+  <option value="TO">Torino</option>
+</select><br><br>
+
+<label>Mezzi posseduti:</label><br>
+<input type="checkbox" name="mezzi" value="Auto"> Auto<br>
+<input type="checkbox" name="mezzi" value="Moto"> Moto<br>
+<input type="checkbox" name="mezzi" value="Bicicletta"> Bicicletta<br>
+<input type="checkbox" name="mezzi" value="Monopattino"> Monopattino<br>
+
+<br>
+
+<label>Materie preferite (max 3):</label><br>
+<select id="materie" multiple size="6" onchange="limiteMaterie(this)">
+  <option value="Matematica">Matematica</option>
+  <option value="Italiano">Italiano</option>
+  <option value="Inglese">Inglese</option>
+  <option value="Storia">Storia</option>
+  <option value="Informatica">Informatica</option>
+  <option value="Fisica">Fisica</option>
+</select>
+<br><br>
+
+<button onclick="mostraDati()">Mostra Dati</button>
+<div id="risultato"></div>
+
+<script>
+function limiteMaterie(select) {
+  let count = 0;
+  for (let opt of select.options) {
+    if (opt.selected) count++;
+  }
+  if (count > 3) {
+    alert("Puoi selezionare massimo 3 materie!");
+    select.options[select.selectedIndex].selected = false;
+  }
+}
+
+function mostraDati() {
+
+  let dati = [];
+
+  dati.push(document.getElementById("nome").value.trim());
+  dati.push(document.getElementById("cognome").value.trim());
+  dati.push(document.getElementById("indirizzo").value.trim());
+  dati.push(document.getElementById("citta").value.trim());
+  dati.push(document.getElementById("cap").value.trim());
+  let birth = document.getElementById("dataNascita").value;
+  dati.push(birth);
+  let anno = new Date(birth).getFullYear();
+  let generazione = "";
+  if (anno >= 1901 && anno <= 1927) generazione = "Greatest Generation";
+  else if (anno >= 1928 && anno <= 1945) generazione = "Silent Generation";
+  else if (anno >= 1946 && anno <= 1964) generazione = "Baby Boomers";
+  else if (anno >= 1965 && anno <= 1980) generazione = "Generazione X";
+  else if (anno >= 1981 && anno <= 1996) generazione = "Millennials";
+  else if (anno >= 1997 && anno <= 2012) generazione = "Generazione Z";
+  else if (anno >= 2013 && anno <= 2023) generazione = "Generazione Alpha";
+  else generazione = "Anno non valido";
+  let sesso = "";
+  let radios = document.getElementsByName("sesso");
+  for (let r of radios) {
+    if (r.checked) sesso = r.value;
+  }
+  dati.push(sesso);
+
+  let provincia = document.getElementById("provincia").value;
+  dati.push(provincia);
+
+  let mezzi = [];
+  let box = document.getElementsByName("mezzi");
+
+  box.forEach(c => {
+    if (c.checked) mezzi.push(c.value);
+  });
+
+  dati.push(mezzi);
+
+  let materieSel = [];
+  let lista = document.getElementById("materie");
+
+  for (let opt of lista.options) {
+    if (opt.selected) {
+      materieSel.push(opt.value);
+    }
+  }
+
+  dati.push(materieSel);
+
+  document.getElementById("risultato").innerHTML =
+    "<h3>Dati inseriti:</h3>" +
+    "Nome: " + dati[0] + "<br>" +
+    "Cognome: " + dati[1] + "<br>" +
+    "Indirizzo: " + dati[2] + "<br>" +
+    "Città: " + dati[3] + "<br>" +
+    "CAP: " + dati[4] + "<br>" +
+    "Data nascita: " + dati[5] + "<br>" +
+    "Generazione: <b>" + generazione + "</b><br><br>" +
+
+    "<b>Sesso:</b> " + dati[6] + "<br>" +
+    "<b>Provincia:</b> " + dati[7] + "<br>" +
+    "<b>Mezzi posseduti:</b> " + dati[8].join(", ") + "<br>" +
+    "<b>Materie preferite:</b> " + dati[9].join(", ");
+}
+
+</script>
+
+</body>
+</html>
