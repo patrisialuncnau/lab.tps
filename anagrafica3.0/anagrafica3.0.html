@@ -1,209 +1,120 @@
 <!DOCTYPE html>
-<html lang="it">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Registrazione dati</title>
-<link rel="stylesheet" href="stile.css">
+  <meta charset="UTF-8">
+  <title>Anagrafica Utente con Collection</title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    .form-container { max-width: 400px; }
+  </style>
 </head>
 <body>
-<div class="card">
-<div class="form-area">
-<h2>Inserisci i tuoi dati</h2>
+  <h2>Inserisci i tuoi dati</h2>
+  <div class="form-container">
+    <label>Nome:</label>
+    <input type="text" id="nome"><br><br>
+    <label>Cognome:</label>
+    <input type="text" id="cognome"><br><br>
+    <label>Indirizzo:</label>
+    <input type="text" id="indirizzo"><br><br>
+    <label>Città:</label>
+    <input>type="text" id="citta"><br><br>
+    <label>CAP:</label>
+    <input type="text" id="cap"><br><br>
+    <label>Data di nascita:</label>
+    <input type="date" id="dataNascita"><br><br>
+    <label>Sesso:</label><br>
+    <input type="radio" name="sesso" value="Maschio">Maschio<br>
+    <input type="radio" name="sesso" value="Femmina">Femmina<br>
+    <input type="radio" name="sesso" value="Altro">Altro<br><br>
+    <label>Provincia:</label>
+    <select id="provincia">
+      <option value="--">Seleziona</option>
+      <option value="MI">Milano</option>
+      <option value="PV">Pavia</option>
+      <option value="VA">Varese</option>
+      <option value="CR">Cremona</option>
+    </select>
+    <br><br>
+    <label>Mezzi posseduti in famiglia:</label><br>
+    <input type="checkbox" name="mezzi" value="Auto">Auto<br>
+    <input type="checkbox" name="mezzi" value="Moto">Moto<br>
+    <input type="checkbox" name="mezzi" value="Bici">Bici<br>
+    <input type="checkbox" name="mezzi" value="Aereo">Aereo<br>
+    <input type="checkbox" name="mezzi" value="Yacht">Yacht<br><br>
+    <label>Materie preferite (max 3):</label><br>
+    <select id="materie" multiple size="9" style="height:150px">
+      <option>Matematica</option>
+      <option>Italiano</option>
+      <option>Inglese</option>
+      <option>Storia</option>
+      <option>Geografia</option>
+      <option>Scienze</option>
+      <option>Informatica</option>
+      <option>Filosofia</option>
+      <option>Arte</option>
+    </select>
+    <br><br>
+    <button onclick="mostraDati()">Invia</button>
+  </div>
+  <p id="risultato"></p>
+  <script>
+    function mostraDati() {
+      let dati = [];
+      dati.push(document.getElementById("nome").value);
+      dati.push(document.getElementById("cognome").value);
+      dati.push(document.getElementById("indirizzo").value);
+      dati.push(document.getElementById("citta").value);
+      dati.push(document.getElementById("cap").value);
+      let birth = document.getElementById("dataNascita").value;
+      dati.push(birth);
+      let anno = new Date(birth).getFullYear();
+      let generazione = "";
+      if (anno >= 1901 && anno <= 1927) generazione = "Greatest Generation";
+      else if (anno >= 1928 && anno <= 1945) generazione = "Silent Generation";
+      else if (anno >= 1946 && anno <= 1964) generazione = "Baby Boomers";
+      else if (anno >= 1965 && anno <= 1980) generazione = "Generazione X";
+      else if (anno >= 1981 && anno <= 1996) generazione = "Millennials";
+      else if (anno >= 1997 && anno <= 2012) generazione = "Generazione Z";
+      else if (anno >= 2013 && anno <= 2023) generazione = "Generazione Alpha";
+      else generazione = "Anno non valido";
+      let sesso = "";
+      let radios = document.getElementsByName("sesso");
+      for (let r of radios) {
+        if (r.checked) sesso = r.value;
+      }
+      dati.push(sesso);
+      let provincia = document.getElementById("provincia").value;
+      dati.push(provincia);
+      let mezzi = [];
+      let box = document.getElementsByName("mezzi");
+      box.forEach(c => { if (c.checked) mezzi.push(c.value); });
+      dati.push(mezzi);
 
-<div class="input-grid">
-<!-- Dati anagrafici -->
-<div class="input-row">
-<label for="nome">Nome:</label>
-<input type="text" id="nome">
-</div>
+      let materieSel = [];
+      let lista = document.getElementById("materie");
 
-<div class="input-row">
-<label for="cognome">Cognome:</label>
-<input type="text" id="cognome">
-</div>
-
-<div class="input-row">
-<label for="indirizzo">Indirizzo:</label>
-<input type="text" id="indirizzo">
-</div>
-
-<div class="input-row">
-<label for="citta">Città:</label>
-<input type="text" id="citta">
-</div>
-
-<div class="input-row">
-<label for="cap">CAP:</label>
-<input type="text" id="cap">
-</div>
-
-<div class="input-row">
-<label for="anno">Anno di nascita:</label>
-<input type="number" id="anno" min="1900" max="2025">
-</div>
-
-<!-- Sesso (radio button) -->
-<div class="input-row">
-<label>Sesso:</label>
-<div>
-<input type="radio" name="sesso" value="Maschio"> Maschio
-<input type="radio" name="sesso" value="Femmina"> Femmina
-<input type="radio" name="sesso" value="Altro"> Altro
-</div>
-</div>
-
-<!-- Provincia (combobox) -->
-<div class="input-row">
-<label for="provincia">Provincia:</label>
-<select id="provincia">
-<option value=""> Seleziona provincia </option>
-<option value="AN">Ancona</option>
-<option value="BA">Bari</option>
-<option value="BG">Bergamo</option>
-<option value="BO">Bologna</option>
-<option value="BS">Brescia</option>
-<option value="CA">Cagliari</option>
-<option value="CZ">Catanzaro</option>
-<option value="CO">Como</option>
-<option value="FI">Firenze</option>
-<option value="FG">Foggia</option>
-<option value="GE">Genova</option>
-<option value="IM">Imperia</option>
-<option value="AQ">L’Aquila</option>
-<option value="LE">Lecce</option>
-<option value="LC">Lecco</option>
-<option value="LI">Livorno</option>
-<option value="MI">Milano</option>
-<option value="MB">Monza</option>
-<option value="NA">Napoli</option>
-<option value="PD">Padova</option>
-<option value="PA">Palermo</option>
-<option value="PR">Parma</option>
-<option value="PV">Pavia</option>
-<option value="PI">Pisa</option>
-<option value="RC">Reggio Calabria</option>
-<option value="RE">Reggio Emilia</option>
-<option value="RN">Rimini</option>
-<option value="RM">Roma</option>
-<option value="SA">Salerno</option>
-<option value="SS">Sassari</option>
-<option value="TO">Torino</option>
-<option value="TN">Trento</option>
-<option value="TV">Treviso</option>
-<option value="TS">Trieste</option>
-<option value="UD">Udine</option>
-<option value="VA">Varese</option>
-<option value="VE">Venezia</option>
-<option value="VR">Verona</option>
-</select>
-</div>
-
-<!-- Mezzi (checkbox) -->
-<div class="input-row">
-<label>Mezzi:</label>
-<div>
-<input type="checkbox" name="mezzi" value="Auto"> Auto
-<input type="checkbox" name="mezzi" value="Moto"> Moto
-<input type="checkbox" name="mezzi" value="Bici"> Bici
-<input type="checkbox" name="mezzi" value="Barca"> Barca
-<input type="checkbox" name="mezzi" value="Aereo"> Aereo
-</div>
-</div>
-
-<!-- Materie preferite (listbox multipla, max 3) -->
-<div class="input-row">
-<label for="materie">Materie preferite, massimo tre:</label>
-<select id="materie" multiple size="6">
-<option value="Educazione civica">Educazione civica</option>
-<option value="Informatica">Informatica</option>
-<option value="Italiano">Italiano</option>
-<option value="Lingua Inglese">Lingua Inglese</option>
-<option value="Matematica">Matematica</option>
-<option value="Religione">Religione</option>
-<option value="Scienze Motorie">Scienze Motorie</option>
-<option value="Sistemi e Reti">Sistemi e Reti</option>
-<option value="Storia">Storia</option>
-<option value="TPS">TPS</option>
-<option value="Telecomunicazioni">Telecomunicazioni</option>
-</select>
-</div>
-
-
-<div class="actions">
-<button onclick="stampaDati()">Invia</button>
-</div>
-</div>
-</div>
-
-<div id="output"></div>
-</div>
-
-<script>
-function stampaDati() {
-let user = new Object();
-user.nome = document.getElementById("nome").value.trim();
-user.cognome = document.getElementById("cognome").value.trim();
-user.indirizzo = document.getElementById("indirizzo").value.trim();
-user.citta = document.getElementById("citta").value.trim();
-user.cap = document.getElementById("cap").value.trim();
-user.anno = document.getElementById("anno").value.trim();
-
-let selezioneSesso = document.querySelector('input[name="sesso"]:checked');
-user.sesso = selezioneSesso ? selezioneSesso.value : "Non specificato";
-
-user.provincia = document.getElementById("provincia").value || "Non selezionata";
-
-let mezziSelezionati = document.querySelectorAll('input[name="mezzi"]:checked');
-user.mezzi = Array.from(mezziSelezionati).map(m => m.value);
-if (user.mezzi.length === 0) user.mezzi = ["Nessuno"];
-
-let materieSel = Array.from(document.getElementById("materie").selectedOptions).map(opt => opt.value);
-
-// Limite massimo 3 materie
-if (materieSel.length > 3) {
-alert("Puoi selezionare al massimo 3 materie!");
-return;
-}
-
-user.materie = materieSel.length ? materieSel : ["Nessuna"];
-
-
-
-if (!user.nome || !user.cognome || user.anno === "") {
-alert("Compila almeno Nome, Cognome e Anno di nascita!");
-return;
-}
-
-const anno = parseInt(user.anno);
-const eta = new Date().getFullYear() - anno;
-let gen = "";
-if (anno >= 1901 && anno <= 1927) gen = "Greatest Generation";
-else if (anno >= 1928 && anno <= 1945) gen = "Generazione Silenziosa";
-else if (anno >= 1946 && anno <= 1964) gen = "Baby Boomers";
-else if (anno >= 1965 && anno <= 1980) gen = "Generazione X";
-else if (anno >= 1981 && anno <= 1996) gen = "Millennials";
-else if (anno >= 1997 && anno <= 2012) gen = "Generazione Z";
-else if (anno >= 2013) gen = "Generazione Alpha";
-else gen = "Anno non valido o troppo lontano nel tempo";
-
-const outputDiv = document.getElementById("output");
-outputDiv.style.display = "block";
-outputDiv.innerHTML = `
-<h3>Dati inseriti:</h3>
-<div><strong>Nome:</strong> ${user.nome}</div>
-<div><strong>Cognome:</strong> ${user.cognome}</div>
-<div><strong>Indirizzo:</strong> ${user.indirizzo}</div>
-<div><strong>Città:</strong> ${user.citta}</div>
-<div><strong>Provincia:</strong> ${user.provincia}</div>
-<div><strong>CAP:</strong> ${user.cap}</div>
-<div><strong>Sesso:</strong> ${user.sesso}</div>
-<div><strong>Anno di nascita:</strong> ${user.anno}</div>
-<div><strong>Età:</strong> ${eta} anni</div>
-<div><strong>Generazione:</strong> ${gen}</div>
-<div><strong>Mezzi:</strong> ${user.mezzi.join(", ")}</div>
-<div><strong>Materia preferita:</strong> ${user.materia}</div>
-`;
-}
-</script>
+      for (let opt of lista.options) {
+        if (opt.selected) {
+          if (materieSel.length < 3) materieSel.push(opt.value);
+        }
+      }
+      dati.push(materieSel);
+      document.getElementById("risultato").innerHTML =
+        "<h3>Dati inseriti:</h3>" +
+        "Nome: " + dati[0] + "<br>" +
+        "Cognome: " + dati[1] + "<br>" +
+        "Indirizzo: " + dati[2] + "<br>" +
+        "Città: " + dati[3] + "<br>" +
+        "CAP: " + dati[4] + "<br>" +
+        "Data nascita: " + dati[5] + "<br>" +
+        "Generazione: <b>" + generazione + "</b><br><br>" +
+        "<b>Sesso:</b> " + dati[6] + "<br>" +
+        "<b>Provincia:</b> " + dati[7] + "<br>" +
+        "<b>Mezzi posseduti:</b> " + dati[8].join(", ") + "<br>" +
+        "<b>Materie preferite:</b> " + dati[9].join(", ");
+    }
+  </script>
 </body>
 </html>
+
