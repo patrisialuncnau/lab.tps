@@ -9,24 +9,34 @@
   </style>
 </head>
 <body>
+
   <h2>Inserisci i tuoi dati</h2>
+
   <div class="form-container">
+
     <label>Nome:</label>
     <input type="text" id="nome"><br><br>
+
     <label>Cognome:</label>
     <input type="text" id="cognome"><br><br>
+
     <label>Indirizzo:</label>
     <input type="text" id="indirizzo"><br><br>
+
     <label>Città:</label>
     <input type="text" id="citta"><br><br>
+
     <label>CAP:</label>
     <input type="text" id="cap"><br><br>
+
     <label>Data di nascita:</label>
     <input type="date" id="dataNascita"><br><br>
+
     <label>Sesso:</label><br>
     <input type="radio" name="sesso" value="Maschio">Maschio<br>
     <input type="radio" name="sesso" value="Femmina">Femmina<br>
     <input type="radio" name="sesso" value="Altro">Altro<br><br>
+
     <label>Provincia:</label>
     <select id="provincia">
       <option value="--">Seleziona</option>
@@ -36,12 +46,14 @@
       <option value="CR">Cremona</option>
     </select>
     <br><br>
+
     <label>Mezzi posseduti in famiglia:</label><br>
     <input type="checkbox" name="mezzi" value="Auto">Auto<br>
     <input type="checkbox" name="mezzi" value="Moto">Moto<br>
     <input type="checkbox" name="mezzi" value="Bici">Bici<br>
     <input type="checkbox" name="mezzi" value="Aereo">Aereo<br>
     <input type="checkbox" name="mezzi" value="Yacht">Yacht<br><br>
+
     <label>Materie preferite (max 3):</label><br>
     <select id="materie" multiple size="9" style="height:150px">
       <option>Matematica</option>
@@ -55,12 +67,16 @@
       <option>Arte</option>
     </select>
     <br><br>
+
     <button onclick="mostraDati()">Invia</button>
   </div>
   <p id="risultato"></p>
   <script>
     function mostraDati() {
+
+
       let dati = [];
+
       dati.push(document.getElementById("nome").value);
       dati.push(document.getElementById("cognome").value);
       dati.push(document.getElementById("indirizzo").value);
@@ -90,7 +106,6 @@
       let box = document.getElementsByName("mezzi");
       box.forEach(c => { if (c.checked) mezzi.push(c.value); });
       dati.push(mezzi);
-
       let materieSel = [];
       let lista = document.getElementById("materie");
 
@@ -109,6 +124,7 @@
         "CAP: " + dati[4] + "<br>" +
         "Data nascita: " + dati[5] + "<br>" +
         "Generazione: <b>" + generazione + "</b><br><br>" +
+
         "<b>Sesso:</b> " + dati[6] + "<br>" +
         "<b>Provincia:</b> " + dati[7] + "<br>" +
         "<b>Mezzi posseduti:</b> " + dati[8].join(", ") + "<br>" +
@@ -117,4 +133,5 @@
   </script>
 </body>
 </html>
+
 
