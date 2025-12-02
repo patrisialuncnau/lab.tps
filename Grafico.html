@@ -1,20 +1,20 @@
+
 <html>
 <body>
-<canvas id="myCanvas" width="300" height="200" style="border:1px solid #d3d3d3;">
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #d3d3d3;">
 </canvas>
 <script>
 var c = document.getElementById("myCanvas");
 var ctx1 = c.getContext("2d");
-ctx1.beginPath();
-ctx1.moveTo(150,10);
-ctx1.lineTo(200,170);
-ctx1.lineTo(90,70);
-ctx1.lineTo(260,70);
-ctx1.lineTo(150,170);
-ctx1.lineTo(150,10);
+ctx1.moveTo(100,0);
+ctx1.lineTo(130,90);
+ctx1.lineTo(53,35);
+ctx1.lineTo(147,35);
+ctx1.lineTo(70,90);
+ctx1.lineTo(100,0);
 ctx1.stroke();
 ctx1.beginPath();
-ctx1.arc(150,100,70,0,2*Math.PI);
+ctx1.arc(100,50,50,0,2*Math.PI);
 ctx1.stroke();
 </script>
 </body>
