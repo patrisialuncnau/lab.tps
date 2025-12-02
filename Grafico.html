@@ -1,0 +1,21 @@
+<html>
+<body>
+<canvas id="c4" width="200" height="200" style="border:1px solid #aaa;"></canvas>
+<script>
+var c = document.getElementById("c4");
+var x = c.getContext("2d");
+x.beginPath();
+x.moveTo(100,10);
+x.lineTo(140,180);
+x.lineTo(50,70);
+x.lineTo(150,70);
+x.lineTo(60,180);
+x.lineTo(100,10);
+x.stroke();
+x.beginPath();
+x.arc(100,100,60,0,2*Math.PI);
+x.stroke();
+</script>
+</body>
+</html>
+
