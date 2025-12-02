@@ -5,12 +5,12 @@
 var c = document.getElementById("c4");
 var x = c.getContext("2d");
 x.beginPath();
-x.moveTo(100,10);
-x.lineTo(140,180);
-x.lineTo(50,70);
-x.lineTo(150,70);
-x.lineTo(60,180);
-x.lineTo(100,10);
+x.moveTo(100, 40);   // prima era 10
+x.lineTo(130, 155);  // prima era 180
+x.lineTo(65, 85);    // prima 70
+x.lineTo(135, 85);   // prima 70
+x.lineTo(70, 155);   // prima 180
+x.lineTo(100, 40);   // chiusura
 x.stroke();
 x.beginPath();
 x.arc(100,100,60,0,2*Math.PI);
@@ -18,4 +18,3 @@ x.stroke();
 </script>
 </body>
 </html>
-
