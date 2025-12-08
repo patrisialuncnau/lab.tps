@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grafico Femminicidi 2024</title>
+    <link rel="stylesheet" href="stile.css">
+</head>
+<body>
+<canvas id="grafico" width="800" height="400"></canvas>
+<script>
+const dati = [11, 9, 10, 10, 11, 13, 14, 13, 9, 10, 13, 13];
+const canvas = document.getElementById('grafico');
+const ctx = canvas.getContext('2d');
+const margineX = 40;
+const margineY = 40;
+const maxVal = Math.max(...dati);
+const coordinate = dati.map((val, i) => {
+    const x = margineX + i * ((canvas.width - 2*margineX) / (dati.length - 1));
+    const y = canvas.height - margineY - (val / maxVal) * (canvas.height - 2*margineY);
+    return { x, y };
+});
+ctx.beginPath();
+ctx.moveTo(coordinate[0].x, coordinate[0].y);
+for (let i = 1; i < coordinate.length; i++) {
+    ctx.lineTo(coordinate[i].x, coordinate[i].y);
+}
+ctx.strokeStyle = "red";
+ctx.lineWidth = 2;
+ctx.stroke();
+</script>
+</body>
+</html>
