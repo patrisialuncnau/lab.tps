@@ -1,31 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-    <title>Grafico Femminicidi 2024</title>
-    <link rel="stylesheet" href="stile.css">
+<meta charset="UTF-8">
+<title>Grafico Femminicidi 2024</title>
+<style>
+  body { font-family: Arial; }
+  canvas { border: 1px solid black; }
+</style>
 </head>
 <body>
-<canvas id="grafico" width="800" height="400"></canvas>
+<h2>Grafico Femminicidi 2024 (Canvas)</h2>
+<canvas id="grafico" width="900" height="400"></canvas>
 <script>
-const dati = [11, 9, 10, 10, 11, 13, 14, 13, 9, 10, 13, 13];
-const canvas = document.getElementById('grafico');
-const ctx = canvas.getContext('2d');
-const margineX = 40;
-const margineY = 40;
-const maxVal = Math.max(...dati);
-const coordinate = dati.map((val, i) => {
-    const x = margineX + i * ((canvas.width - 2*margineX) / (dati.length - 1));
-    const y = canvas.height - margineY - (val / maxVal) * (canvas.height - 2*margineY);
-    return { x, y };
-});
+const mesi = [
+  "Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno",
+  "Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"
+];
+const valori = [11, 9, 10, 10, 11, 13, 14, 13, 9, 10, 13, 13];
+const coordinate = [];
+const startX = 50;
+const stepX = 60;
+const maxY = 20; 
+for (let i = 0; i < valori.length; i++) {
+  coordinate.push({
+    x: startX + i * stepX,
+    y: 350 - valori[i] * (300 / maxY) 
+  });
+}
+onst canvas = document.getElementById("grafico");
+const ctx = canvas.getContext("2d");
+
+ctx.beginPath();
+ctx.moveTo(40, 350);
+ctx.lineTo(850, 350);
+ctx.moveTo(40, 350);
+ctx.lineTo(40, 30);
+ctx.stroke();
+
+ctx.font = "12px Arial";
+for (let i = 0; i < coordinate.length; i++) {
+  ctx.fillText(mesi[i], coordinate[i].x - 20, 370);
+}
+
 ctx.beginPath();
 ctx.moveTo(coordinate[0].x, coordinate[0].y);
 for (let i = 1; i < coordinate.length; i++) {
-    ctx.lineTo(coordinate[i].x, coordinate[i].y);
+  ctx.lineTo(coordinate[i].x, coordinate[i].y);
 }
 ctx.strokeStyle = "red";
 ctx.lineWidth = 2;
 ctx.stroke();
+
+ctx.fillStyle = "red";
+for (let i = 0; i < coordinate.length; i++) {
+  ctx.beginPath();
+  ctx.arc(coordinate[i].x, coordinate[i].y, 4, 0, Math.PI * 2);
+  ctx.fill();
+}
+i
+ctx.fillStyle = "black";
+for (let i = 0; i < coordinate.length; i++) {
+  ctx.fillText(valori[i], coordinate[i].x - 5, coordinate[i].y - 10);
+}
 </script>
+
 </body>
 </html>
