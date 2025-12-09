@@ -135,11 +135,9 @@ function mostraDati() {
 
   let mezzi = [];
   let box = document.getElementsByName("mezzi");
-
-  box.forEach(c => {
-    if (c.checked) mezzi.push(c.value);
-  });
-
+  for (let c of box) {
+  if (c.checked) mezzi.push(c.value);
+}
   dati.push(mezzi);
 
   let materieSel = [];
@@ -160,7 +158,6 @@ function mostraDati() {
     "CAP: " + dati[4] + "<br>" +
     "Data nascita: " + dati[5] + "<br>" +
     "Generazione: <b>" + generazione + "</b><br><br>" +
-
     "<b>Sesso:</b> " + dati[6] + "<br>" +
     "<b>Provincia:</b> " + dati[7] + "<br>" +
     "<b>Mezzi posseduti:</b> " + dati[8].join(", ") + "<br>" +
