@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeTracker Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Icone via FontAwesome (opzionali, sostituibili con SVG) -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+
+    <header class="main-header">
+
+        <div class="container nav-container">
+
+            <div class="logo">
+
+                <i class="fas fa-chart-line"></i> <span>LifeTracker</span>
+
+            </div>
+
+            
+
+            <button class="menu-toggle" aria-label="Apri menu" aria-expanded="false">
+
+                <i class="fas fa-bars"></i>
+
+            </button>
+
+
+            <nav class="navbar">
+
+                <ul class="nav-links">
+
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+
+                    <li><a href="#tasks" class="nav-link">Attività</a></li>
+
+                    <li><a href="#notes" class="nav-link">Note</a></li>
+
+                    <li><a href="#stats" class="nav-link">Statistiche</a></li>
+
+                </ul>
+
+                <button id="theme-switcher" class="theme-btn" aria-label="Cambia tema">
+
+                    <i class="fas fa-moon"></i>
+
+                </button>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- SEZIONE HOME -->
+
+        <section id="home" class="page-section active">
+
+            <header class="section-header">
+
+                <h1>Bentornato, Utente</h1>
+
+                <p>Ecco il riepilogo dei tuoi obiettivi odierni.</p>
+
+            </header>
+
+
+            <div class="dashboard-grid">
+
+                <div class="card stat-card">
+
+                    <h3>Focus Settimanale</h3>
+
+                    <div class="progress-container">
+
+                        <div class="progress-bar" style="width: 65%;"></div>
+
+                    </div>
+
+                    <p>65% del tuo obiettivo completato</p>
+
+                </div>
+
+                <div class="card highlight-card">
+
+                    <h3>Prossima Task</h3>
+
+                    <p id="top-task-display">Caricamento...</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SEZIONE ATTIVITÀ -->
+
+        <section id="tasks" class="page-section">
+
+            <header class="section-header">
+
+                <h2>Attività & Obiettivi</h2>
+
+                <button class="btn btn-primary" id="open-task-modal">
+
+                    <i class="fas fa-plus"></i> Nuovo Task
+
+                </button>
+
+            </header>
+
+
+            <div class="filters-bar">
+
+                <input type="text" id="search-tasks" placeholder="Cerca attività..." aria-label="Cerca attività">
+
+                <select id="filter-status" aria-label="Filtra per stato">
+
+                    <option value="all">Tutti gli stati</option>
+
+                    <option value="pending">In corso</option>
+
+                    <option value="completed">Completati</option>
+
+                </select>
+
+                <select id="sort-tasks" aria-label="Ordina per">
+
+                    <option value="date">Data</option>
+
+                    <option value="priority">Priorità</option>
+
+                    <option value="alpha">Nome (A-Z)</option>
+
+                </select>
+
+                <button class="btn btn-outline" id="reset-filters">Reset</button>
+
+            </div>
+
+
+            <div id="tasks-container" class="items-grid">
+
+                <!-- Task caricati dinamicamente -->
+
+            </div>
+
+            <div class="load-more-container">
+
+                <button id="load-more-tasks" class="btn btn-outline">Carica Altri</button>
+
+            </div>
+
+        </section>
+
+
+        <!-- SEZIONE NOTE -->
+
+        <section id="notes" class="page-section">
+
+            <header class="section-header">
+
+                <h2>Note Personali</h2>
+
+            </header>
+
+            <div class="notes-layout">
+
+                <form id="note-form" class="card">
+
+                    <div class="form-group">
+
+                        <label for="note-title">Titolo</label>
+
+                        <input type="text" id="note-title" required minlength="3">
+
+                        <span class="error-msg">Minimo 3 caratteri</span>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="note-content">Contenuto</label>
+
+                        <textarea id="note-content" rows="4" required></textarea>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Salva Nota</button>
+
+                </form>
+
+                <div id="notes-container" class="items-grid"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SEZIONE STATISTICHE -->
+
+        <section id="stats" class="page-section">
+
+            <header class="section-header">
+
+                <h2>Statistiche & Profilo</h2>
+
+            </header>
+
+            <div class="stats-grid">
+
+                <div class="card chart-box">
+
+                    <h3>Produttività Mensile</h3>
+
+                    <div class="fake-chart">
+
+                        <div class="bar" style="height: 40%"></div>
+
+                        <div class="bar" style="height: 70%"></div>
+
+                        <div class="bar" style="height: 55%"></div>
+
+                        <div class="bar" style="height: 90%"></div>
+
+                        <div class="bar" style="height: 65%"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- MODALE TASK -->
+
+    <div id="task-modal" class="modal" aria-hidden="true">
+
+        <div class="modal-content card">
+
+            <button class="close-modal" aria-label="Chiudi">&times;</button>
+
+            <h2 id="modal-title">Dettagli Task</h2>
+
+            <form id="task-form">
+
+                <div class="form-group">
+
+                    <label for="task-name">Nome Attività*</label>
+
+                    <input type="text" id="task-name" required minlength="3">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="task-priority">Priorità</label>
+
+                    <select id="task-priority">
+
+                        <option value="1">Bassa</option>
+
+                        <option value="2">Media</option>
+
+                        <option value="3">Alta</option>
+
+                    </select>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Conferma</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- NOTIFICHE TOAST -->
+
+    <div id="toast-container" class="toast-container"></div>
+
+
+    <footer class="main-footer">
+
+        <p>&copy; 2024 LifeTracker Dashboard - Realizzato in Vanilla JS</p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
