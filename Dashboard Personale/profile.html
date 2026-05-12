@@ -3,68 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeDashboard | Profile</title>
+    <title>✨ My Daily Sparkle | Diario</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <div class="brand">LifeDashboard</div>
-            <ul class="nav-links" id="nav-links">
+            <div class="brand">✨ Daily Sparkle</div>
+            <ul class="nav-links">
                 <li><a href="index.html">Dashboard</a></li>
-                <li><a href="tasks.html">Tasks & Goals</a></li>
-                <li><a href="profile.html" class="active">Profile</a></li>
+                <li><a href="tasks.html">Obiettivi</a></li>
+                <li><a href="profile.html" class="active">Diario</a></li>
             </ul>
-            <div class="nav-controls">
-                <button id="theme-toggle" class="btn-icon" aria-label="Cambia tema">🌓</button>
-                <button id="hamburger-btn" class="btn-icon hamburger" aria-expanded="false" aria-label="Menu">☰</button>
-            </div>
         </nav>
     </header>
 
     <main>
-        <div class="profile-grid">
-            <section class="card">
-                <h2>Profilo Personale</h2>
-                <div style="display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0;">
-                    <div style="width: 80px; height: 80px; background-color: var(--primary-color); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem;">U</div>
-                    <div>
-                        <h3>Utente Modello</h3>
-                        <p class="text-muted">Sviluppatore & Designer</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+            
+            <section class="card" style="text-align: center;">
+                <div style="width: 120px; height: 120px; margin: 0 auto 1.5rem auto; background: var(--gold-light); border: 4px solid var(--gold-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem; box-shadow: var(--shadow-gold);">
+                    👑
+                </div>
+                <h2>Il tuo Profilo</h2>
+                <p class="text-muted" style="margin-bottom: 2rem;">Sogna in grande, brilla sempre.</p>
+                
+                <div style="text-align: left;">
+                    <div class="input-group">
+                        <label>Nome Stile</label>
+                        <input type="text" value="Utente Radiosa" readonly>
+                    </div>
+                    <div class="input-group">
+                        <label>Mantra Personale</label>
+                        <input type="text" value="Attiro solo energia positiva ✨" readonly>
                     </div>
                 </div>
-                
-                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
-                
-                <h3>Blocco Note (Auto-salvataggio)</h3>
-                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">I dati restano nel tuo browser via LocalStorage.</p>
-                <textarea id="personal-notes" rows="5" style="width: 100%; padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-main);" placeholder="Scrivi i tuoi appunti qui..."></textarea>
             </section>
 
             <section class="card">
-                <h2>Contattaci / Feedback</h2>
-                <form id="contact-form" novalidate style="margin-top: 1.5rem;">
-                    <div class="input-group">
-                        <label for="contact-name">Nome</label>
-                        <input type="text" id="contact-name" name="name">
-                        <span class="error-msg"></span>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="contact-email">Email</label>
-                        <input type="email" id="contact-email" name="email">
-                        <span class="error-msg"></span>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="contact-msg">Messaggio</label>
-                        <textarea id="contact-msg" name="message" rows="4"></textarea>
-                        <span class="error-msg"></span>
-                    </div>
-
-                    <button type="submit" class="btn-primary" style="width: 100%;">Invia Messaggio</button>
-                </form>
+                <h2>Il tuo Diario Segreto 📔</h2>
+                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 1.5rem;">I tuoi pensieri vengono salvati magicamente nel browser.</p>
+                
+                <textarea id="personal-notes" rows="12" style="width: 100%; padding: 1.5rem; border-radius: var(--radius-md); border: 2px solid var(--pink-light); background: #fffcfd; color: var(--text-main); font-family: var(--font-body); resize: vertical;" placeholder="Caro diario, oggi mi sento..."></textarea>
             </section>
+
         </div>
     </main>
 
