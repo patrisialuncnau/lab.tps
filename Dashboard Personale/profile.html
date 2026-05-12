@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeDashboard | Profile</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="brand">LifeDashboard</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="tasks.html">Tasks & Goals</a></li>
+                <li><a href="profile.html" class="active">Profile</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button id="theme-toggle" class="btn-icon" aria-label="Cambia tema">🌓</button>
+                <button id="hamburger-btn" class="btn-icon hamburger" aria-expanded="false" aria-label="Menu">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="profile-grid">
+            <section class="card">
+                <h2>Profilo Personale</h2>
+                <div style="display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0;">
+                    <div style="width: 80px; height: 80px; background-color: var(--primary-color); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem;">U</div>
+                    <div>
+                        <h3>Utente Modello</h3>
+                        <p class="text-muted">Sviluppatore & Designer</p>
+                    </div>
+                </div>
+                
+                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
+                
+                <h3>Blocco Note (Auto-salvataggio)</h3>
+                <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 1rem;">I dati restano nel tuo browser via LocalStorage.</p>
+                <textarea id="personal-notes" rows="5" style="width: 100%; padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-main);" placeholder="Scrivi i tuoi appunti qui..."></textarea>
+            </section>
+
+            <section class="card">
+                <h2>Contattaci / Feedback</h2>
+                <form id="contact-form" novalidate style="margin-top: 1.5rem;">
+                    <div class="input-group">
+                        <label for="contact-name">Nome</label>
+                        <input type="text" id="contact-name" name="name">
+                        <span class="error-msg"></span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" name="email">
+                        <span class="error-msg"></span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="contact-msg">Messaggio</label>
+                        <textarea id="contact-msg" name="message" rows="4"></textarea>
+                        <span class="error-msg"></span>
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="width: 100%;">Invia Messaggio</button>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
