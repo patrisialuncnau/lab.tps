@@ -389,7 +389,7 @@
 <body>
 
 <nav role="navigation" aria-label="Navigazione principale">
-  <a href="index.html" class="nav-brand">Lumière<span>✦</span></a>
+  <a href="index.html" class="nav-brand">Patrisia<span>✦</span></a>
   <ul class="nav-links" role="list">
     <li><a href="index.html">Home</a></li>
     <li><a href="catalogo.html" class="active" aria-current="page">Catalogo</a></li>
@@ -447,7 +447,7 @@
   </div>
 </main>
 
-<footer><p>Fatto con ♡ · <strong>Lumière</strong> · 2025</p></footer>
+<footer><p> · <strong>Patrisia</strong> · 2026</p></footer>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Dettagli prodotto">
@@ -639,7 +639,7 @@ document.getElementById('resetFilters').addEventListener('click',()=>{
 
 /* ── FAVORITES ── */
 function toggleFav(p){
-  if(favorites.has(p.id)){ favorites.delete(p.id); showToast(`💔 Rimosso: ${p.name}`); }
+  if(favorites.has(p.id)){ favorites.delete(p.id); showToast(` Rimosso: ${p.name}`); }
   else{ favorites.add(p.id); showToast(`♥ Aggiunto ai preferiti: ${p.name}`); }
   saveFavs(); render(); updateModalFavBtn();
 }
