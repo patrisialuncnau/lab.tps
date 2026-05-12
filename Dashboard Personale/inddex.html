@@ -3,61 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeDashboard | Home</title>
+    <title>✨ My Daily Sparkle | Home</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <div class="brand">LifeDashboard</div>
-            <ul class="nav-links" id="nav-links">
+            <div class="brand">✨ Daily Sparkle</div>
+            <ul class="nav-links">
                 <li><a href="index.html" class="active">Dashboard</a></li>
-                <li><a href="tasks.html">Tasks & Goals</a></li>
-                <li><a href="profile.html">Profile</a></li>
+                <li><a href="tasks.html">Obiettivi</a></li>
+                <li><a href="profile.html">Diario</a></li>
             </ul>
-            <div class="nav-controls">
-                <button id="theme-toggle" class="btn-icon" aria-label="Cambia tema">🌓</button>
-                <button id="hamburger-btn" class="btn-icon hamburger" aria-expanded="false" aria-label="Menu">☰</button>
-            </div>
         </nav>
     </header>
 
     <main>
         <section class="hero">
-            <h1>Bentornato, Utente!</h1>
-            <p class="text-muted">Ecco il riassunto della tua produttività di oggi.</p>
+            <h1>Buongiorno, Splendore! 🌸</h1>
+            <p class="text-muted">Pronta a far brillare la tua giornata? Ecco il tuo riepilogo.</p>
         </section>
 
         <section class="stats-grid">
             <div class="card stat-card">
-                <h3>Task Completati</h3>
+                <h3>Obiettivi Raggiunti</h3>
                 <div class="value" id="stat-completed">0 / 0</div>
             </div>
             <div class="card stat-card">
-                <h3>Obiettivi Settimanali</h3>
-                <div class="value">3 / 5</div>
+                <h3>Tempo per te</h3>
+                <div class="value">45 Min</div>
             </div>
             <div class="card stat-card">
-                <h3>Indice Produttività</h3>
-                <div class="value">85%</div>
+                <h3>Mood Settimanale</h3>
+                <div class="value">Radiosa ✨</div>
             </div>
         </section>
 
-        <section class="card">
-            <h2>Progresso Generale</h2>
-            <div class="progress-container">
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="progress-fill"></div>
-                </div>
+        <section class="card" style="margin-bottom: 3rem;">
+            <h2>I tuoi progressi 🎀</h2>
+            <div class="progress-bar-bg" style="margin-top: 1rem;">
+                <div class="progress-bar-fill" id="progress-fill"></div>
             </div>
         </section>
 
-        <section style="margin-top: 2rem;">
-            <h2>Task in primo piano oggi</h2>
-            <div id="daily-tasks-list" style="margin-top: 1rem;">
+        <section>
+            <h2>Focus di Oggi</h2>
+            <div id="daily-tasks-list" style="margin-top: 1.5rem;">
                 </div>
-            <blockquote style="margin-top: 2rem; font-style: italic; color: var(--text-muted); border-left: 4px solid var(--primary-color); padding-left: 1rem;">
-                "Il segreto per andare avanti è iniziare."
+            
+            <blockquote style="margin-top: 3rem;">
+                "L'eleganza è la sola bellezza che non sfiorisce mai." <br>
+                <span style="font-size: 0.9rem; font-family: var(--font-body); color: var(--text-muted);">- Audrey Hepburn</span>
             </blockquote>
         </section>
     </main>
