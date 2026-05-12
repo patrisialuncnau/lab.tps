@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeDashboard | Tasks</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="brand">LifeDashboard</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="tasks.html" class="active">Tasks & Goals</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button id="theme-toggle" class="btn-icon" aria-label="Cambia tema">🌓</button>
+                <button id="hamburger-btn" class="btn-icon hamburger" aria-expanded="false" aria-label="Menu">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="controls-bar">
+            <div class="input-group" style="flex: 1; margin: 0;">
+                <input type="text" id="search-task" placeholder="Cerca attività..." aria-label="Cerca task">
+            </div>
+            <div class="input-group" style="margin: 0;">
+                <select id="filter-status" aria-label="Filtra per stato">
+                    <option value="all">Tutti gli stati</option>
+                    <option value="todo">Da fare</option>
+                    <option value="in-progress">In corso</option>
+                    <option value="completed">Completati</option>
+                    <option value="high-priority">Priorità Alta</option>
+                </select>
+            </div>
+            <div class="input-group" style="margin: 0;">
+                <select id="sort-task" aria-label="Ordina per">
+                    <option value="date">Data</option>
+                    <option value="name">Nome (A-Z)</option>
+                    <option value="priority">Priorità</option>
+                </select>
+            </div>
+            <button id="reset-filters" class="btn-secondary">Reset</button>
+        </div>
+
+        <section class="task-grid" id="task-container">
+            </section>
+
+        <div style="text-align: center; margin-top: 2rem;">
+            <button id="load-more-btn" class="btn-primary" style="display: none;">Carica altri</button>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="task-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Titolo</h2>
+                <button id="close-modal-btn" class="btn-icon" aria-label="Chiudi modale">✕</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-desc" class="text-muted" style="margin-bottom: 1rem;"></p>
+                <small id="modal-meta" style="font-weight: bold;"></small>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
