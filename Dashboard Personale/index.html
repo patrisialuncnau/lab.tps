@@ -3,8 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ My Daily Sparkle | Home</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>✨ My Daily Sparkle | Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ================= IL TUO STILE ELEGANTE ================= */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fdf5f6 0%, #fce4ec 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #4a3b3c; --text-muted: #8a7375;
+            --gold-primary: #d4af37; --gold-hover: #b5952f; --gold-light: #f9f1d8;
+            --pink-accent: #f48fb1; --pink-light: #f8bbd0;
+            --font-heading: 'Playfair Display', serif; --font-body: 'Poppins', sans-serif;
+            --shadow-soft: 0 10px 25px rgba(244, 143, 177, 0.15);
+            --shadow-gold: 0 4px 15px rgba(212, 175, 55, 0.2);
+            --transition: all 0.4s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: var(--font-body); background: var(--bg-gradient); color: var(--text-main); line-height: 1.7; min-height: 100vh; }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg-gradient); } ::-webkit-scrollbar-thumb { background: var(--pink-light); border-radius: 10px; }
+        a { text-decoration: none; color: inherit; } ul { list-style: none; }
+        h1, h2, h3 { font-family: var(--font-heading); color: var(--gold-primary); }
+        .navbar { background: var(--card-bg); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-soft); border-bottom: 2px solid var(--gold-primary); }
+        .brand { font-family: var(--font-heading); font-weight: 700; font-size: 1.8rem; color: var(--gold-primary); }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { font-weight: 500; color: var(--text-muted); text-transform: uppercase; font-size: 0.9rem; position: relative; transition: var(--transition); }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold-primary); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--gold-primary); transition: var(--transition); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        main { padding: 2rem 1rem; max-width: 1200px; margin: 0 auto; }
+        .card { background: var(--card-bg); border-radius: 16px; padding: 2rem; box-shadow: var(--shadow-soft); border-top: 4px solid var(--gold-primary); position: relative; transition: var(--transition); }
+        .card::before { content: '✨'; position: absolute; top: 10px; right: 15px; opacity: 0.2; font-size: 2rem; }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-gold); }
+        .hero { text-align: center; padding: 3rem 0; } .hero h1 { font-size: 3rem; margin-bottom: 0.5rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+        .stat-card { text-align: center; } .stat-card h3 { color: var(--text-muted); font-size: 1rem; text-transform: uppercase; }
+        .stat-card .value { font-size: 2.5rem; font-family: var(--font-heading); color: var(--pink-accent); }
+        .progress-bar-bg { width: 100%; height: 12px; background: var(--pink-light); border-radius: 6px; overflow: hidden; margin-top: 1rem;}
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold-primary), #ffe58f); width: 0%; transition: width 1.5s ease-in-out; }
+        blockquote { font-family: var(--font-heading); font-style: italic; font-size: 1.2rem; color: var(--gold-primary); text-align: center; padding: 2rem; border: 2px dashed var(--pink-light); border-radius: 16px; background: rgba(255,255,255,0.6); margin-top: 3rem;}
+    </style>
 </head>
 <body>
     <header>
@@ -41,23 +78,52 @@
 
         <section class="card" style="margin-bottom: 3rem;">
             <h2>I tuoi progressi 🎀</h2>
-            <div class="progress-bar-bg" style="margin-top: 1rem;">
+            <div class="progress-bar-bg">
                 <div class="progress-bar-fill" id="progress-fill"></div>
             </div>
         </section>
 
         <section>
             <h2>Focus di Oggi</h2>
-            <div id="daily-tasks-list" style="margin-top: 1.5rem;">
-                </div>
+            <div id="daily-tasks-list" style="margin-top: 1.5rem;"></div>
             
-            <blockquote style="margin-top: 3rem;">
+            <blockquote>
                 "L'eleganza è la sola bellezza che non sfiorisce mai." <br>
                 <span style="font-size: 0.9rem; font-family: var(--font-body); color: var(--text-muted);">- Audrey Hepburn</span>
             </blockquote>
         </section>
     </main>
 
-    <script src="js/script.js"></script>
+    <script>
+        // ================= DATI E LOGICA MAGICA =================
+        const defaultData = {
+            tasks: [
+                { id: 1, title: 'Morning Routine ✨', status: 'todo' },
+                { id: 2, title: 'Workout Gambe 🏋️‍♀️', status: 'completed' },
+                { id: 3, title: 'Rispondere alle Email 💌', status: 'todo' }
+            ]
+        };
+        const appState = JSON.parse(localStorage.getItem('lifeDashboardGlow')) || defaultData;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const completed = appState.tasks.filter(t => t.status === 'completed').length;
+            const total = appState.tasks.length;
+            
+            document.getElementById('stat-completed').textContent = `${completed} / ${total}`;
+            setTimeout(() => { 
+                document.getElementById('progress-fill').style.width = `${total === 0 ? 0 : (completed/total)*100}%`; 
+            }, 300);
+
+            const list = document.getElementById('daily-tasks-list');
+            const pending = appState.tasks.filter(t => t.status !== 'completed').slice(0, 3);
+            if(pending.length === 0) {
+                list.innerHTML = '<p class="text-muted">Tutto completato, goditi il relax! 🌸</p>';
+            } else {
+                pending.forEach(t => {
+                    list.innerHTML += `<div class="card" style="margin-bottom:1rem; padding: 1.5rem;"><strong>${t.title}</strong></div>`;
+                });
+            }
+        });
+    </script>
 </body>
 </html>
