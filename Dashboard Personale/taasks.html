@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ My Daily Sparkle | Obiettivi</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="brand">✨ Daily Sparkle</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="tasks.html" class="active">Obiettivi</a></li>
+                <li><a href="profile.html">Diario</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 3rem; background: rgba(255,255,255,0.7); padding: 1.5rem; border-radius: var(--radius-lg); border: 1px solid var(--pink-light);">
+            <div class="input-group" style="flex: 1; min-width: 200px; margin: 0;">
+                <label>Cerca ispirazione...</label>
+                <input type="text" id="search-task" placeholder="Es. Workout, skincare...">
+            </div>
+            <div class="input-group" style="margin: 0; min-width: 150px;">
+                <label>Categoria</label>
+                <select id="filter-status">
+                    <option value="all">Tutte le magie</option>
+                    <option value="todo">Da iniziare</option>
+                    <option value="completed">Completate 👑</option>
+                </select>
+            </div>
+            <div class="input-group" style="margin: 0; min-width: 150px;">
+                <label>Ordina</label>
+                <select id="sort-task">
+                    <option value="date">Cronologico</option>
+                    <option value="name">Alfabetico</option>
+                </select>
+            </div>
+        </div>
+
+        <section class="task-grid" id="task-container">
+            </section>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <button id="load-more-btn" class="btn-primary">Rivela di più ✨</button>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
