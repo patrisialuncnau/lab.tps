@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeDashboard | Home</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="brand">LifeDashboard</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Dashboard</a></li>
+                <li><a href="tasks.html">Tasks & Goals</a></li>
+                <li><a href="profile.html">Profile</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button id="theme-toggle" class="btn-icon" aria-label="Cambia tema">🌓</button>
+                <button id="hamburger-btn" class="btn-icon hamburger" aria-expanded="false" aria-label="Menu">☰</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Bentornato, Utente!</h1>
+            <p class="text-muted">Ecco il riassunto della tua produttività di oggi.</p>
+        </section>
+
+        <section class="stats-grid">
+            <div class="card stat-card">
+                <h3>Task Completati</h3>
+                <div class="value" id="stat-completed">0 / 0</div>
+            </div>
+            <div class="card stat-card">
+                <h3>Obiettivi Settimanali</h3>
+                <div class="value">3 / 5</div>
+            </div>
+            <div class="card stat-card">
+                <h3>Indice Produttività</h3>
+                <div class="value">85%</div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Progresso Generale</h2>
+            <div class="progress-container">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 2rem;">
+            <h2>Task in primo piano oggi</h2>
+            <div id="daily-tasks-list" style="margin-top: 1rem;">
+                </div>
+            <blockquote style="margin-top: 2rem; font-style: italic; color: var(--text-muted); border-left: 4px solid var(--primary-color); padding-left: 1rem;">
+                "Il segreto per andare avanti è iniziare."
+            </blockquote>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
