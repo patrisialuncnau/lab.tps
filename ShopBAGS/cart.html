@@ -8,26 +8,24 @@
 <body>
 
 <nav>
-<div>LUXE BAGS</div>
-<div>
+<div>LUXURY BAGS</div>
 <a href="index.html">Home</a>
-</div>
 </nav>
 
-<div style="padding:40px">
-<h1>Carrello</h1>
+<div style="padding:50px;font-style:italic">
+
+<h1>Il tuo carrello</h1>
 
 <div id="cart"></div>
 
 <h2 id="total"></h2>
 
-<p style="color:green">
-Spedizione gratuita sopra €200
+<p style="color:#2e7d32">
+Spedizione gratuita sopra 200€
 </p>
 
-<button onclick="alert('Checkout simulato')">
-Procedi al checkout
-</button>
+<button onclick="checkout()">Procedi al checkout</button>
+
 </div>
 
 <script>
@@ -37,12 +35,18 @@ let total=0;
 
 document.getElementById("cart").innerHTML=cart.map(p=>{
 total+=p.price;
-return `<div style="background:white;padding:10px;margin:10px 0;border-radius:10px">
+return `
+<div style="background:white;padding:15px;margin:10px 0;border-radius:10px;box-shadow:0 5px 15px rgba(0,0,0,0.1)">
 ${p.name} - €${p.price}
-</div>`;
+</div>
+`;
 }).join("");
 
 document.getElementById("total").innerText="Totale: € "+total;
+
+function checkout(){
+alert("Pagamento luxury simulato completato");
+}
 </script>
 
 </body>
