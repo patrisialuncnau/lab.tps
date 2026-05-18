@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Boutique Luxury Bags</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav>
+<div>LUXE BAGS</div>
+<div>
+<a href="index.html">Home</a>
+<a href="cart.html">Carrello</a>
+</div>
+</nav>
+
+<div class="hero">
+Eleganza senza tempo<br>Collezione Luxury Bags
+</div>
+
+<h2 style="padding:20px 40px;">Prodotti in evidenza</h2>
+
+<div class="grid" id="grid"></div>
+
+<footer>
+© 2026 Luxury Bags • Instagram • Contact • Newsletter
+</footer>
+
+<script src="products.js"></script>
+
+<script>
+const grid=document.getElementById("grid");
+
+products.forEach(p=>{
+grid.innerHTML+=`
+<div class="card">
+<img src="${p.images[0]}">
+<div class="card-content">
+<div class="brand">${p.brand}</div>
+<h3>${p.name}</h3>
+<p>€ ${p.price}</p>
+<button onclick="openProduct(${p.id})">Visualizza prodotto</button>
+</div>
+</div>`;
+});
+
+function openProduct(id){
+localStorage.setItem("productId",id);
+location.href="product.html";
+}
+</script>
+
+</body>
+</html>
