@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prodotto · MAISON ÉLISE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c8a96e;--gold-light:#e8d5a8;--gold-pale:#f9f3e8;--rose:#c9a0a0;--rose-light:#f2e8e8;--rose-pale:#fdf6f6;--rose-deep:#a07070;--dark:#1a1a1a;--mid:#6b6b6b;--light:#f8f5f2;--white:#ffffff;--border:#e8ddd5;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:var(--light);color:var(--dark);overflow-x:hidden;}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 4rem;display:flex;align-items:center;justify-content:space-between;height:80px;background:rgba(248,245,242,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.brand{text-decoration:none;}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;letter-spacing:0.25em;color:var(--dark);}
+.brand-sub{font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--rose);display:block;margin-top:1px;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-link{text-decoration:none;color:var(--dark);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;transition:color 0.3s;}
+.nav-link:hover{color:var(--gold);}
+.nav-icons{display:flex;gap:1.5rem;}
+.nav-icon{background:none;border:none;cursor:pointer;font-size:1rem;color:var(--dark);transition:color 0.3s;position:relative;}
+.nav-icon:hover{color:var(--gold);}
+.cart-badge{position:absolute;top:-6px;right:-8px;background:var(--rose);color:var(--white);font-size:0.55rem;font-weight:700;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;}
+
+/* BREADCRUMB */
+.breadcrumb{padding:100px 6rem 0;font-size:0.65rem;letter-spacing:0.15em;color:var(--mid);}
+.breadcrumb a{color:var(--mid);text-decoration:none;transition:color 0.3s;}
+.breadcrumb a:hover{color:var(--gold);}
+.breadcrumb span{color:var(--dark);font-weight:500;}
+
+/* PRODUCT LAYOUT */
+.product-page{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:80vh;padding:2rem 6rem 6rem;}
+.product-gallery{padding:2rem 3rem 2rem 0;position:sticky;top:80px;align-self:start;}
+.main-image-wrap{
+  aspect-ratio:4/5;overflow:hidden;background:var(--rose-pale);
+  position:relative;cursor:zoom-in;
+}
+.main-image-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s;}
+.main-image-wrap:hover img{transform:scale(1.08);}
+.main-image-wrap .zoom-hint{
+  position:absolute;bottom:1.5rem;right:1.5rem;
+  background:rgba(26,20,20,0.7);color:var(--gold);
+  font-size:0.6rem;letter-spacing:0.15em;padding:0.4rem 0.8rem;
+  pointer-events:none;
+}
+.thumb-row{display:flex;gap:0.75rem;margin-top:1rem;}
+.thumb{
+  width:80px;height:80px;object-fit:cover;cursor:pointer;
+  border:2px solid transparent;transition:border-color 0.3s;opacity:0.6;
+  transition:opacity 0.3s,border-color 0.3s;
+}
+.thumb.active,.thumb:hover{border-color:var(--gold);opacity:1;}
+.no-img-placeholder{
+  aspect-ratio:4/5;background:linear-gradient(135deg,var(--rose-pale),var(--gold-pale));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--rose);font-size:5rem;gap:1rem;
+}
+.no-img-placeholder span{font-family:'Cormorant Garamond',serif;font-size:0.9rem;letter-spacing:0.2em;color:var(--mid);}
+
+/* PRODUCT INFO */
+.product-info{padding:2rem 0 2rem 3rem;border-left:1px solid var(--border);}
+.product-eyebrow{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:0.75rem;}
+.product-name em{font-style:italic;color:var(--rose-deep);}
+.product-model{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);margin-bottom:1.5rem;}
+
+.price-wrap{display:flex;align-items:baseline;gap:0.5rem;margin-bottom:2rem;padding:1.25rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.price-main{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:500;color:var(--dark);}
+.price-currency{font-size:1.2rem;font-family:'Montserrat',sans-serif;font-weight:300;color:var(--mid);align-self:flex-start;margin-top:0.5rem;}
+.price-vat{font-size:0.65rem;letter-spacing:0.1em;color:var(--mid);margin-left:0.25rem;}
+
+.detail-section{margin-bottom:1.75rem;}
+.detail-label{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;font-weight:600;}
+.product-description{font-size:0.78rem;color:var(--mid);line-height:1.9;}
+
+.color-dots{display:flex;gap:0.75rem;flex-wrap:wrap;}
+.color-dot{
+  width:32px;height:32px;border-radius:50%;border:2px solid transparent;
+  cursor:pointer;transition:border-color 0.3s,transform 0.3s;position:relative;
+}
+.color-dot.active,.color-dot:hover{border-color:var(--dark);transform:scale(1.15);}
+.color-label{font-size:0.65rem;letter-spacing:0.1em;color:var(--mid);margin-top:0.5rem;}
+
+.qty-wrap{display:flex;align-items:center;gap:0;}
+.qty-btn{width:44px;height:44px;background:none;border:1px solid var(--border);cursor:pointer;font-size:1.1rem;transition:all 0.3s;display:flex;align-items:center;justify-content:center;}
+.qty-btn:hover{background:var(--dark);border-color:var(--dark);color:var(--gold);}
+.qty-input{width:64px;height:44px;border:1px solid var(--border);border-left:none;border-right:none;text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.2rem;background:none;color:var(--dark);outline:none;}
+
+.cta-wrap{display:flex;flex-direction:column;gap:0.75rem;margin-top:2rem;}
+.btn-add-cart{
+  width:100%;padding:1.1rem;background:var(--dark);color:var(--gold);
+  border:none;cursor:pointer;font-family:'Montserrat',sans-serif;
+  font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;
+  transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:0.75rem;
+}
+.btn-add-cart:hover{background:var(--gold);color:var(--dark);}
+.btn-buy-now{
+  width:100%;padding:1.1rem;background:transparent;color:var(--dark);
+  border:1px solid var(--dark);cursor:pointer;font-family:'Montserrat',sans-serif;
+  font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;
+  transition:all 0.3s;
+}
+.btn-buy-now:hover{background:var(--dark);color:var(--white);}
+
+.product-meta{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.meta-row{display:flex;align-items:center;gap:1rem;padding:0.5rem 0;font-size:0.72rem;color:var(--mid);}
+.meta-icon{font-size:1rem;}
+
+/* TABS */
+.tabs-section{padding:4rem 6rem;background:var(--white);border-top:1px solid var(--border);}
+.tabs-nav{display:flex;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+.tab-btn{padding:0.85rem 1.5rem;background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--mid);transition:all 0.3s;}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-content{display:none;font-size:0.78rem;color:var(--mid);line-height:1.9;}
+.tab-content.active{display:block;}
+.spec-table{width:100%;border-collapse:collapse;}
+.spec-table tr{border-bottom:1px solid var(--border);}
+.spec-table td{padding:0.75rem 0;}
+.spec-table td:first-child{font-weight:600;color:var(--dark);min-width:160px;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;}
+
+/* REVIEWS */
+.reviews-section{padding:0;margin-top:2rem;}
+.review-card{padding:1.5rem 0;border-bottom:1px solid var(--border);}
+.review-header{display:flex;align-items:center;gap:1rem;margin-bottom:0.75rem;}
+.reviewer-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose-light),var(--gold-pale));display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.reviewer-name{font-size:0.78rem;font-weight:600;color:var(--dark);}
+.reviewer-date{font-size:0.65rem;color:var(--mid);}
+.stars{color:var(--gold);font-size:0.8rem;letter-spacing:0.1rem;}
+.review-text{font-size:0.75rem;color:var(--mid);line-height:1.8;}
+
+/* RELATED */
+.related-section{padding:4rem 6rem;background:var(--light);}
+.section-eyebrow{font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:0.5rem;display:flex;align-items:center;gap:1rem;}
+.section-eyebrow::before,.section-eyebrow::after{content:'';width:30px;height:1px;background:var(--gold-light);}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:var(--dark);margin-bottom:2.5rem;}
+.related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.5rem;}
+.related-card{cursor:pointer;background:var(--white);border:1px solid var(--border);transition:transform 0.3s;}
+.related-card:hover{transform:translateY(-3px);}
+.related-card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;}
+.related-card-info{padding:1rem;}
+.related-card-brand{font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);}
+.related-card-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin:0.2rem 0;}
+.related-card-price{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--dark);}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:var(--gold);padding:1rem 1.5rem;font-size:0.75rem;letter-spacing:0.1em;border-left:3px solid var(--gold);transform:translateY(80px);opacity:0;transition:all 0.3s;z-index:9999;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+@media(max-width:1100px){
+  .navbar{padding:0 2rem;}
+  .breadcrumb{padding:100px 2rem 0;}
+  .product-page{grid-template-columns:1fr;padding:1rem 2rem 4rem;}
+  .product-gallery{position:relative;top:0;padding:0;margin-bottom:2rem;}
+  .product-info{padding:0;border-left:none;border-top:1px solid var(--border);padding-top:2rem;}
+  .tabs-section,.related-section{padding:3rem 2rem;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .navbar{padding:0 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="brand">
+    <div class="brand-name" id="navBrand">MAISON ÉLISE</div>
+    <span class="brand-sub">Luxury Handbags</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="index.html#shop" class="nav-link">Shop</a></li>
+    <li><a href="#" class="nav-link">Collezioni</a></li>
+    <li><a href="#" class="nav-link">Atelier</a></li>
+  </ul>
+  <div class="nav-icons">
+    <button class="nav-icon">🔍</button>
+    <button class="nav-icon">👤</button>
+    <button class="nav-icon" onclick="location.href='cart.html'" style="position:relative;">🛍️<span class="cart-badge" id="cartBadge">0</span></button>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> &nbsp;/&nbsp;
+  <a href="index.html#shop">Shop</a> &nbsp;/&nbsp;
+  <span id="breadProduct">Prodotto</span>
+</div>
+
+<div class="product-page">
+  <!-- GALLERY -->
+  <div class="product-gallery" id="gallerySection">
+    <div class="main-image-wrap" id="mainImgWrap">
+      <span class="zoom-hint">🔍 Zoom</span>
+    </div>
+    <div class="thumb-row" id="thumbRow"></div>
+  </div>
+
+  <!-- INFO -->
+  <div class="product-info">
+    <p class="product-eyebrow" id="productBrand">Maison Élise</p>
+    <h1 class="product-name" id="productName">—</h1>
+    <p class="product-model" id="productModel"></p>
+
+    <div class="price-wrap">
+      <span class="price-currency" id="priceCurrency">€</span>
+      <span class="price-main" id="productPrice">—</span>
+      <span class="price-vat">IVA inclusa</span>
+    </div>
+
+    <div class="detail-section">
+      <p class="detail-label">Descrizione</p>
+      <p class="product-description" id="productDesc">—</p>
+    </div>
+
+    <div class="detail-section">
+      <p class="detail-label">Colori Disponibili</p>
+      <div class="color-dots">
+        <div class="color-dot active" style="background:#c9a0a0;" title="Rosa Antico"></div>
+        <div class="color-dot" style="background:#c8a96e;" title="Oro Champagne"></div>
+        <div class="color-dot" style="background:#1a1a1a;" title="Nero"></div>
+        <div class="color-dot" style="background:#8b7355;" title="Cognac"></div>
+      </div>
+      <p class="color-label" id="colorLabel">Rosa Antico</p>
+    </div>
+
+    <div class="detail-section">
+      <p class="detail-label">Quantità</p>
+      <div class="qty-wrap">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <input class="qty-input" type="number" id="qtyInput" value="1" min="1" max="10">
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <button class="btn-add-cart" onclick="addToCart()">🛍️ &nbsp; Aggiungi al Carrello</button>
+      <button class="btn-buy-now" onclick="buyNow()">Compra Ora →</button>
+    </div>
+
+    <div class="product-meta">
+      <div class="meta-row"><span class="meta-icon">🚚</span>Spedizione gratuita sopra <span id="freeShipMeta">€200</span></div>
+      <div class="meta-row"><span class="meta-icon">↩️</span>Resi gratuiti entro 30 giorni</div>
+      <div class="meta-row"><span class="meta-icon">🔒</span>Pagamento sicuro e certificato</div>
+      <div class="meta-row"><span class="meta-icon">✦</span>Autenticità garantita</div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS: Dettagli / Cura / Recensioni -->
+<div class="tabs-section">
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('details',this)">Dettagli Prodotto</button>
+    <button class="tab-btn" onclick="switchTab('care',this)">Cura & Materiali</button>
+    <button class="tab-btn" onclick="switchTab('reviews',this)">Recensioni (12)</button>
+  </div>
+  <div class="tab-content active" id="tab-details">
+    <table class="spec-table" id="specTable">
+      <tr><td>Marca</td><td id="specMarca">—</td></tr>
+      <tr><td>Modello</td><td id="specModello">—</td></tr>
+      <tr><td>Materiale</td><td>Pelle di Vitello Nappa</td></tr>
+      <tr><td>Hardware</td><td>Ottone placcato oro 24k</td></tr>
+      <tr><td>Fodera</td><td>Seta naturale</td></tr>
+      <tr><td>Chiusura</td><td>Magnete dorato + zip di sicurezza</td></tr>
+      <tr><td>Dimensioni</td><td>28 × 18 × 10 cm</td></tr>
+      <tr><td>Made in</td><td>Italia</td></tr>
+    </table>
+  </div>
+  <div class="tab-content" id="tab-care">
+    <p>La nostra pelle è trattata con oli naturali e cere vegetali per garantire longevità e morbidezza. Per preservare la bellezza del tuo pezzo:</p>
+    <br>
+    <p><strong>Pulizia quotidiana:</strong> Rimuovi la polvere con un panno morbido e asciutto. Evita prodotti chimici aggressivi.</p><br>
+    <p><strong>Idratazione:</strong> Applica crema per pelli di qualità ogni 2-3 mesi. Consigliamo prodotti neutri e inodore.</p><br>
+    <p><strong>Conservazione:</strong> Riponi la borsa nel sacchetto in flanella fornito, evita esposizione diretta alla luce solare.</p><br>
+    <p><strong>Umidità:</strong> In caso di pioggia, asciuga delicatamente con un panno pulito e lascia asciugare naturalmente.</p>
+  </div>
+  <div class="tab-content" id="tab-reviews">
+    <div class="reviews-section" id="reviewsList"></div>
+  </div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<div class="related-section">
+  <p class="section-eyebrow">Potrebbe Piacerti</p>
+  <h2 class="section-title">Prodotti Correlati</h2>
+  <div class="related-grid" id="relatedGrid"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const REVIEWS=[
+  {name:'Chiara M.',date:'Marzo 2026',rating:5,text:'Assolutamente splendida. La qualità della pelle supera ogni aspettativa. Il colore rosa antico è esattamente come in foto.'},
+  {name:'Sofia L.',date:'Febbraio 2026',rating:5,text:'Ho acquistato come regalo per mia madre e siamo rimaste entrambe senza parole. Imballaggio lussuoso, consegna rapidissima.'},
+  {name:'Valentina R.',date:'Gennaio 2026',rating:4,text:'Bellissima borsa, artigianato impeccabile. La tolla dorata è di ottima qualità. Toglierò una stella solo per i tempi di consegna.'},
+];
+
+function getCfg(){try{return JSON.parse(localStorage.getItem('ecomConfig'))||{};}catch(e){return {};}}
+function getCart(){try{return JSON.parse(localStorage.getItem('ecomCart'))||[];}catch(e){return [];}}
+function saveCart(c){localStorage.setItem('ecomCart',JSON.stringify(c));}
+
+const DEFAULT_PRODUCTS=[
+  {marca:'Maison Élise',modello:'Le Sac Diamant',descrizione:'Borsa a mano in pelle di vitello nappa morbidissima, con chiusura a magnete dorata. Perfetta per occasioni speciali e serate eleganti.',immagine:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80',prezzo:'890'},
+  {marca:'Maison Élise',modello:'Rosa Dorata',descrizione:'Mini bag iconica in pelle verniciata con dettagli hardware in oro 24k. Il pezzo iconico della stagione.',immagine:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80',prezzo:'650'},
+  {marca:'Maison Élise',modello:'Velvet Nuit',descrizione:'Clutch da sera in velluto trapuntato con chiusura a catena dorata. Design esclusivo con pattern a chevron.',immagine:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=800&q=80',prezzo:'480'},
+  {marca:'Maison Élise',modello:'Tote Lumière',descrizione:'Shopper in pelle full-grain con manici intrecciati a mano. Capiente e strutturata, con fodera in seta naturale.',immagine:'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80',prezzo:'1200'},
+  {marca:'Maison Élise',modello:'Baguette Rosé',descrizione:'Borsa a tracolla in pelle saffiano con logo ricamato e tracolla regolabile doppia.',immagine:'https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=800&q=80',prezzo:'720'},
+  {marca:'Maison Élise',modello:'Chain D\'Or',descrizione:'Shoulder bag con catena intrecciata in ottone dorato. Pelle matelassé con cuciture a rombi.',immagine:'https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?w=800&q=80',prezzo:'1450'},
+];
+
+function getProducts(){
+  const cfg=getCfg();
+  if(cfg.csvData&&cfg.csvData.length){
+    const m=cfg.mapping||{};
+    return cfg.csvData.map(row=>({
+      marca:row[m.marca||'marca']||'',modello:row[m.modello||'modello']||'',
+      descrizione:row[m.descrizione||'descrizione']||'',immagine:row[m.immagine||'immagine']||'',prezzo:row[m.prezzo||'prezzo']||'0',
+    }));
+  }
+  return DEFAULT_PRODUCTS;
+}
+
+const urlParams=new URLSearchParams(window.location.search);
+const productId=parseInt(urlParams.get('id'))||0;
+const products=getProducts();
+const product=products[productId]||products[0];
+const cfg=getCfg();
+const currency=cfg.currency||'€';
+
+// Populate
+function init(){
+  if(cfg.brandName){
+    document.getElementById('navBrand').textContent=cfg.brandName;
+    document.querySelectorAll('.brand-sub').forEach(el=>el.textContent=cfg.brandTagline||'Luxury Handbags');
+  }
+  if(cfg.colorPrimary) document.documentElement.style.setProperty('--gold',cfg.colorPrimary);
+  if(cfg.colorSecondary) document.documentElement.style.setProperty('--rose',cfg.colorSecondary);
+  if(cfg.freeShipping) document.getElementById('freeShipMeta').textContent='€'+cfg.freeShipping;
+
+  document.title=`${product.modello} · ${cfg.brandName||'MAISON ÉLISE'}`;
+  document.getElementById('breadProduct').textContent=product.modello;
+  document.getElementById('productBrand').textContent=product.marca;
+  document.getElementById('productName').textContent=product.modello;
+  document.getElementById('productModel').textContent=`REF-${String(productId+1).padStart(4,'0')} · ${product.marca}`;
+  document.getElementById('productDesc').textContent=product.descrizione;
+  document.getElementById('priceCurrency').textContent=currency;
+  document.getElementById('productPrice').textContent=parseFloat(product.prezzo).toLocaleString('it-IT',{minimumFractionDigits:0});
+  document.getElementById('specMarca').textContent=product.marca;
+  document.getElementById('specModello').textContent=product.modello;
+
+  // Gallery
+  const wrap=document.getElementById('mainImgWrap');
+  const thumbRow=document.getElementById('thumbRow');
+  const imgs=product.immagine?[product.immagine]:[];
+  // Extra sample thumbs (same image, different zoom simulation)
+  const galleryImgs=product.immagine?[product.immagine,product.immagine,product.immagine]:[];
+
+  if(imgs.length){
+    const mainImg=document.createElement('img');
+    mainImg.src=imgs[0];mainImg.alt=product.modello;mainImg.id='mainImg';
+    mainImg.style.cssText='width:100%;height:100%;object-fit:cover;transition:transform 0.6s;display:block;';
+    wrap.insertBefore(mainImg,wrap.firstChild);
+    galleryImgs.forEach((src,i)=>{
+      const t=document.createElement('img');
+      t.src=src;t.className='thumb'+(i===0?' active':'');t.alt='';
+      t.onclick=()=>{
+        document.getElementById('mainImg').src=src;
+        document.querySelectorAll('.thumb').forEach(th=>th.classList.remove('active'));
+        t.classList.add('active');
+      };
+      thumbRow.appendChild(t);
+    });
+  } else {
+    const ph=document.createElement('div');
+    ph.className='no-img-placeholder';ph.innerHTML='👜<span>Immagine non disponibile</span>';
+    wrap.appendChild(ph);
+  }
+
+  // Color dots
+  document.querySelectorAll('.color-dot').forEach(dot=>{
+    dot.onclick=()=>{
+      document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active'));
+      dot.classList.add('active');
+      document.getElementById('colorLabel').textContent=dot.title;
+    };
+  });
+
+  // Reviews
+  const revList=document.getElementById('reviewsList');
+  revList.innerHTML=REVIEWS.map(r=>`
+    <div class="review-card">
+      <div class="review-header">
+        <div class="reviewer-avatar">👤</div>
+        <div>
+          <div class="reviewer-name">${r.name}</div>
+          <div class="reviewer-date">${r.date}</div>
+        </div>
+        <div class="stars" style="margin-left:auto">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+      </div>
+      <p class="review-text">${r.text}</p>
+    </div>
+  `).join('');
+
+  // Related
+  const related=products.filter((_,i)=>i!==productId).slice(0,4);
+  document.getElementById('relatedGrid').innerHTML=related.map((p,i)=>{
+    const idx=products.indexOf(p);
+    return `<div class="related-card" onclick="location.href='product.html?id=${idx}'">
+      ${p.immagine?`<img src="${p.immagine}" alt="${p.modello}" loading="lazy">`:'<div style="aspect-ratio:4/5;background:var(--rose-pale);display:flex;align-items:center;justify-content:center;font-size:3rem;">👜</div>'}
+      <div class="related-card-info">
+        <div class="related-card-brand">${p.marca}</div>
+        <div class="related-card-name">${p.modello}</div>
+        <div class="related-card-price">${currency}${parseFloat(p.prezzo).toLocaleString('it-IT',{minimumFractionDigits:0})}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  updateCartBadge();
+}
+
+function changeQty(delta){
+  const inp=document.getElementById('qtyInput');
+  inp.value=Math.max(1,Math.min(10,parseInt(inp.value)||1)+delta);
+}
+
+function addToCart(){
+  const cart=getCart();
+  const qty=parseInt(document.getElementById('qtyInput').value)||1;
+  const key=product.modello;
+  const idx=cart.findIndex(i=>i.modello===key);
+  if(idx>-1) cart[idx].qty=(cart[idx].qty||1)+qty;
+  else cart.push({...product,qty});
+  saveCart(cart);updateCartBadge();showToast('✓ Aggiunto al carrello!');
+}
+
+function buyNow(){addToCart();location.href='cart.html';}
+
+function updateCartBadge(){
+  const count=getCart().reduce((s,i)=>s+(i.qty||1),0);
+  document.getElementById('cartBadge').textContent=count;
+}
+
+function switchTab(name,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+init();
+</script>
+</body>
+</html>
