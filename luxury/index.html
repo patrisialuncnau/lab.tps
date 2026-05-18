@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAISON ÉLISE · Luxury Handbags</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c8a96e;
+  --gold-light: #e8d5a8;
+  --gold-pale: #f9f3e8;
+  --gold-deep: #a08040;
+  --rose: #c9a0a0;
+  --rose-light: #f2e8e8;
+  --rose-pale: #fdf6f6;
+  --rose-deep: #a07070;
+  --dark: #1a1a1a;
+  --dark2: #2a2020;
+  --mid: #6b6b6b;
+  --light: #f8f5f2;
+  --white: #ffffff;
+  --border: #e8ddd5;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Montserrat',sans-serif;background:var(--light);color:var(--dark);overflow-x:hidden;}
+
+/* ── NAVBAR ── */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:0 4rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:80px;
+  background:rgba(248,245,242,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  transition:all 0.4s;
+}
+.navbar.scrolled{background:rgba(26,20,20,0.97);border-color:#333;}
+.navbar.scrolled .nav-link{color:#ccc;}
+.navbar.scrolled .nav-link:hover{color:var(--gold);}
+.navbar.scrolled .brand-name{color:var(--gold);}
+.navbar.scrolled .brand-sub{color:var(--rose);}
+.navbar.scrolled .nav-icon{color:#ccc;}
+.navbar.scrolled .nav-icon:hover{color:var(--gold);}
+
+.brand{text-decoration:none;}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;letter-spacing:0.25em;color:var(--dark);transition:color 0.4s;}
+.brand-sub{font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--rose);display:block;margin-top:1px;transition:color 0.4s;}
+
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
+.nav-link{text-decoration:none;color:var(--dark);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;transition:color 0.3s;position:relative;}
+.nav-link::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s;}
+.nav-link:hover::after{transform:scaleX(1);}
+.nav-link:hover{color:var(--gold);}
+.nav-link.active{color:var(--gold);}
+.nav-link.active::after{transform:scaleX(1);}
+
+.nav-icons{display:flex;gap:1.5rem;align-items:center;}
+.nav-icon{background:none;border:none;cursor:pointer;font-size:1rem;color:var(--dark);transition:color 0.3s;position:relative;}
+.nav-icon:hover{color:var(--gold);}
+.cart-badge{
+  position:absolute;top:-6px;right:-8px;
+  background:var(--rose);color:var(--white);
+  font-size:0.55rem;font-weight:700;
+  border-radius:50%;width:16px;height:16px;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  padding-top:80px;
+  overflow:hidden;
+}
+.hero-content{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 4rem 5rem 6rem;
+  background:var(--light);
+  position:relative;
+}
+.hero-content::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:radial-gradient(ellipse at 30% 50%, rgba(201,160,160,0.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:0.75rem;
+}
+.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--gold);}
+.hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3.5rem,5.5vw,5.5rem);
+  font-weight:300;line-height:1.05;letter-spacing:-0.01em;
+  color:var(--dark);margin-bottom:1.5rem;
+}
+.hero-title em{font-style:italic;color:var(--rose-deep);}
+.hero-sub{
+  font-size:0.75rem;color:var(--mid);letter-spacing:0.08em;line-height:1.8;
+  max-width:380px;margin-bottom:3rem;
+}
+.hero-cta-group{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-hero-primary{
+  display:inline-flex;align-items:center;gap:0.75rem;
+  padding:1rem 2rem;background:var(--dark);color:var(--gold);
+  font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;
+  text-decoration:none;transition:all 0.3s;border:1px solid var(--dark);
+}
+.btn-hero-primary:hover{background:var(--gold);color:var(--dark);border-color:var(--gold);}
+.btn-hero-outline{
+  display:inline-flex;align-items:center;gap:0.75rem;
+  padding:1rem 2rem;background:transparent;color:var(--dark);
+  font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;
+  text-decoration:none;transition:all 0.3s;border:1px solid var(--dark);
+}
+.btn-hero-outline:hover{background:var(--dark);color:var(--white);}
+
+.hero-image-wrap{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#f0e4e4 0%,#e8d5b0 50%,#f4ede8 100%);
+}
+.hero-image-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 8s ease;
+}
+.hero-image-wrap:hover img{transform:scale(1.04);}
+.hero-image-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,rgba(248,245,242,0.15) 0%,transparent 40%);
+}
+.hero-badge{
+  position:absolute;bottom:3rem;left:3rem;
+  background:rgba(26,20,20,0.85);backdrop-filter:blur(8px);
+  color:var(--gold);padding:1rem 1.5rem;
+  font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;
+  border-left:2px solid var(--gold);
+}
+.hero-badge strong{font-family:'Cormorant Garamond',serif;font-size:1.2rem;display:block;font-style:italic;font-weight:400;}
+
+/* ── MARQUEE ── */
+.marquee-strip{
+  background:var(--dark);padding:0.85rem 0;overflow:hidden;
+}
+.marquee-inner{
+  display:flex;gap:4rem;white-space:nowrap;
+  animation:marquee 25s linear infinite;
+}
+.marquee-inner span{
+  font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;
+  color:var(--gold);font-weight:500;flex-shrink:0;
+}
+.marquee-inner span.dot{color:var(--rose);}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── SECTIONS ── */
+.section{padding:6rem 6rem;}
+.section-header{text-align:center;margin-bottom:4rem;}
+.section-eyebrow{
+  font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin-bottom:1rem;
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+}
+.section-eyebrow::before,.section-eyebrow::after{content:'';width:40px;height:1px;background:var(--gold-light);}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,3.5vw,3.5rem);font-weight:300;color:var(--dark);}
+.section-title em{font-style:italic;color:var(--rose-deep);}
+.section-sub{font-size:0.75rem;color:var(--mid);margin-top:0.75rem;letter-spacing:0.05em;}
+
+/* ── PRODUCTS GRID ── */
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:2px;
+}
+.product-card{
+  position:relative;background:var(--white);
+  overflow:hidden;cursor:pointer;
+  transition:transform 0.4s;
+  border:1px solid var(--border);
+}
+.product-card:hover{transform:translateY(-4px);}
+.product-card:hover .product-img{transform:scale(1.06);}
+.product-card:hover .card-overlay{opacity:1;}
+
+.product-img-wrap{
+  aspect-ratio:4/5;overflow:hidden;background:var(--rose-pale);
+  position:relative;
+}
+.product-img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+  display:block;
+}
+.img-placeholder{
+  width:100%;height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--rose-pale),var(--gold-pale));
+  color:var(--rose);font-size:4rem;gap:0.5rem;
+}
+.img-placeholder span{font-family:'Cormorant Garamond',serif;font-size:0.75rem;letter-spacing:0.2em;color:var(--mid);}
+
+.card-overlay{
+  position:absolute;inset:0;
+  background:rgba(26,20,20,0.35);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding:2rem;opacity:0;transition:opacity 0.4s;
+}
+.card-overlay-btn{
+  background:var(--white);color:var(--dark);
+  border:none;padding:0.75rem 2rem;
+  font-family:'Montserrat',sans-serif;font-size:0.65rem;
+  letter-spacing:0.2em;text-transform:uppercase;font-weight:600;
+  cursor:pointer;transition:all 0.3s;width:100%;
+}
+.card-overlay-btn:hover{background:var(--gold);color:var(--dark);}
+
+.product-tag{
+  position:absolute;top:1rem;left:1rem;
+  background:var(--dark);color:var(--gold);
+  font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;
+  padding:0.3rem 0.75rem;
+}
+
+.product-info{padding:1.5rem;}
+.product-brand{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;}
+.product-name{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--dark);margin-bottom:0.5rem;}
+.product-desc{font-size:0.72rem;color:var(--mid);line-height:1.7;margin-bottom:1rem;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.product-footer{display:flex;align-items:center;justify-content:space-between;}
+.product-price{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:500;color:var(--dark);}
+.product-price sup{font-size:0.85rem;font-family:'Montserrat',sans-serif;font-weight:300;vertical-align:super;}
+.quick-add{
+  background:none;border:1px solid var(--border);
+  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.3s;font-size:1rem;
+}
+.quick-add:hover{background:var(--dark);border-color:var(--dark);color:var(--gold);}
+
+/* ── FEATURED BANNER ── */
+.featured-banner{
+  margin:0 6rem 6rem;
+  display:grid;grid-template-columns:1fr 1fr;
+  background:var(--dark);overflow:hidden;min-height:400px;
+}
+.banner-content{
+  padding:4rem;display:flex;flex-direction:column;justify-content:center;
+}
+.banner-eyebrow{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--rose);margin-bottom:1rem;}
+.banner-title{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;color:var(--white);line-height:1.1;margin-bottom:1rem;}
+.banner-title em{font-style:italic;color:var(--gold);}
+.banner-text{font-size:0.75rem;color:#999;line-height:1.8;margin-bottom:2rem;}
+.btn-banner{
+  display:inline-flex;align-items:center;gap:0.75rem;
+  padding:0.85rem 1.75rem;background:var(--gold);color:var(--dark);
+  font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;
+  text-decoration:none;transition:all 0.3s;align-self:flex-start;
+  font-family:'Montserrat',sans-serif;
+}
+.btn-banner:hover{background:var(--gold-light);}
+.banner-image{overflow:hidden;}
+.banner-image img{width:100%;height:100%;object-fit:cover;opacity:0.7;transition:transform 8s;}
+.banner-image:hover img{transform:scale(1.05);}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--dark);color:#ccc;
+  padding:5rem 6rem 2rem;
+}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;
+  gap:3rem;margin-bottom:4rem;
+}
+.footer-brand .brand-name{color:var(--gold);}
+.footer-brand .brand-sub{color:var(--rose);}
+.footer-brand p{font-size:0.72rem;color:#888;line-height:1.8;margin-top:1rem;max-width:240px;}
+.footer-social{display:flex;gap:0.75rem;margin-top:1.5rem;}
+.social-link{
+  width:36px;height:36px;border:1px solid #333;display:flex;
+  align-items:center;justify-content:center;font-size:0.85rem;
+  text-decoration:none;color:#888;transition:all 0.3s;
+}
+.social-link:hover{border-color:var(--gold);color:var(--gold);}
+
+.footer-col h4{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;font-weight:600;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:0.6rem;}
+.footer-col ul li a{font-size:0.75rem;color:#888;text-decoration:none;transition:color 0.3s;letter-spacing:0.03em;}
+.footer-col ul li a:hover{color:var(--gold);}
+
+.newsletter-form{display:flex;margin-top:0.75rem;}
+.newsletter-form input{
+  flex:1;padding:0.75rem 1rem;background:#111;border:1px solid #333;
+  color:var(--white);font-family:'Montserrat',sans-serif;font-size:0.72rem;outline:none;
+  transition:border-color 0.3s;
+}
+.newsletter-form input:focus{border-color:var(--gold);}
+.newsletter-form button{
+  padding:0.75rem 1rem;background:var(--gold);color:var(--dark);
+  border:none;cursor:pointer;font-size:0.9rem;transition:background 0.3s;
+}
+.newsletter-form button:hover{background:var(--gold-light);}
+
+.footer-bottom{
+  border-top:1px solid #222;padding-top:2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-bottom p{font-size:0.65rem;color:#555;letter-spacing:0.05em;}
+.footer-bottom-links{display:flex;gap:2rem;}
+.footer-bottom-links a{font-size:0.65rem;color:#555;text-decoration:none;transition:color 0.3s;letter-spacing:0.05em;}
+.footer-bottom-links a:hover{color:var(--gold);}
+
+/* ── LOADING ── */
+.loading-screen{
+  position:fixed;inset:0;background:var(--dark);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;transition:opacity 0.8s,visibility 0.8s;
+}
+.loading-screen.hidden{opacity:0;visibility:hidden;}
+.loading-brand{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--gold);letter-spacing:0.3em;font-weight:300;font-style:italic;}
+.loading-bar{width:120px;height:1px;background:#333;margin-top:2rem;position:relative;overflow:hidden;}
+.loading-bar::after{content:'';position:absolute;left:-100%;top:0;bottom:0;width:100%;background:var(--gold);animation:loadbar 1.5s ease-in-out forwards;}
+@keyframes loadbar{to{left:100%;}}
+
+/* ── ANIMATIONS ── */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s,transform 0.7s;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+
+/* ── EMPTY STATE ── */
+.empty-state{
+  text-align:center;padding:5rem;grid-column:1/-1;
+  color:var(--mid);
+}
+.empty-state .empty-icon{font-size:4rem;margin-bottom:1rem;}
+.empty-state h3{font-family:'Cormorant Garamond',serif;font-size:2rem;margin-bottom:0.5rem;color:var(--dark);}
+.empty-state p{font-size:0.8rem;margin-bottom:1.5rem;}
+.empty-state a{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:var(--dark);color:var(--gold);padding:0.75rem 1.5rem;
+  font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;
+  text-decoration:none;font-weight:600;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .navbar{padding:0 2rem;}
+  .hero{grid-template-columns:1fr;}
+  .hero-content{padding:4rem 2rem;}
+  .hero-image-wrap{min-height:50vh;}
+  .section{padding:4rem 2rem;}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
+  .featured-banner{margin:0 2rem 4rem;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .navbar{padding:0 1.5rem;}
+  .footer-grid{grid-template-columns:1fr;}
+  .featured-banner{grid-template-columns:1fr;margin:0 1rem 3rem;}
+  .banner-image{min-height:240px;}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}
+  .section{padding:3rem 1.5rem;}
+  footer{padding:3rem 1.5rem 2rem;}
+}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loader">
+  <div class="loading-brand">Maison Élise</div>
+  <div class="loading-bar"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="brand">
+    <div class="brand-name" id="navBrand">MAISON ÉLISE</div>
+    <span class="brand-sub" id="navSub">Luxury Handbags</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link active">Home</a></li>
+    <li><a href="#shop" class="nav-link">Shop</a></li>
+    <li><a href="#" class="nav-link">Collezioni</a></li>
+    <li><a href="#" class="nav-link">Atelier</a></li>
+  </ul>
+  <div class="nav-icons">
+    <button class="nav-icon" title="Cerca">🔍</button>
+    <button class="nav-icon" title="Account">👤</button>
+    <button class="nav-icon" title="Carrello" onclick="location.href='cart.html'" style="position:relative;">
+      🛍️<span class="cart-badge" id="cartBadge">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Collezione Primavera 2026</p>
+    <h1 class="hero-title" id="heroTitle">L'Arte<br>del <em>Lusso</em></h1>
+    <p class="hero-sub" id="heroSub">Ogni borsa racconta una storia di artigianato e raffinatezza. Pelli pregiate, dettagli dorati, eleganza senza tempo.</p>
+    <div class="hero-cta-group">
+      <a href="#shop" class="btn-hero-primary">Scopri la Collezione ↓</a>
+      <a href="#" class="btn-hero-outline">Il Nostro Atelier</a>
+    </div>
+  </div>
+  <div class="hero-image-wrap">
+    <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=1400&q=85" alt="Luxury handbag hero" loading="eager">
+    <div class="hero-image-overlay"></div>
+    <div class="hero-badge">
+      <strong>Nuova Stagione</strong>
+      Artigianato Italiano · Edizione Limitata
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner" id="marqueeInner">
+    <span>Artigianato Italiano</span><span class="dot">✦</span>
+    <span>Pelle Nappa di Vitello</span><span class="dot">✦</span>
+    <span>Hardware in Oro 24k</span><span class="dot">✦</span>
+    <span>Edizione Limitata</span><span class="dot">✦</span>
+    <span>Spedizione Gratuita da €200</span><span class="dot">✦</span>
+    <span>Autenticità Garantita</span><span class="dot">✦</span>
+    <span>Artigianato Italiano</span><span class="dot">✦</span>
+    <span>Pelle Nappa di Vitello</span><span class="dot">✦</span>
+    <span>Hardware in Oro 24k</span><span class="dot">✦</span>
+    <span>Edizione Limitata</span><span class="dot">✦</span>
+    <span>Spedizione Gratuita da €200</span><span class="dot">✦</span>
+    <span>Autenticità Garantita</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- SHOP -->
+<section class="section" id="shop">
+  <div class="section-header">
+    <p class="section-eyebrow">Collezione Completa</p>
+    <h2 class="section-title">Le Nostre <em>Creazioni</em></h2>
+    <p class="section-sub">Ogni pezzo è un'opera d'arte pensata per chi apprezza il bello</p>
+  </div>
+  <div class="products-grid" id="productsGrid">
+    <!-- populated by JS -->
+  </div>
+</section>
+
+<!-- FEATURED BANNER -->
+<div class="featured-banner fade-in">
+  <div class="banner-content">
+    <p class="banner-eyebrow">✦ Servizio Esclusivo</p>
+    <h2 class="banner-title">Personalizza la <em>Tua</em> Borsa</h2>
+    <p class="banner-text">Scegli pelle, colore e dettagli hardware per creare il tuo pezzo unico. Il nostro atelier realizzerà la tua visione con cura artigianale.</p>
+    <a href="#" class="btn-banner">Richiedi Personalizzazione →</a>
+  </div>
+  <div class="banner-image">
+    <img src="https://images.unsplash.com/photo-1591561954557-26941169b49e?w=900&q=80" alt="Atelier">
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col footer-brand">
+      <a href="index.html" class="brand">
+        <div class="brand-name" id="footerBrand">MAISON ÉLISE</div>
+        <span class="brand-sub">Luxury Handbags</span>
+      </a>
+      <p>Borse artigianali italiane create con materiali pregiati e dedizione al dettaglio. Dal 2010, il lusso che dura nel tempo.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link">📸</a>
+        <a href="#" class="social-link">📘</a>
+        <a href="#" class="social-link">🐦</a>
+        <a href="#" class="social-link">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigazione</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#">Nuovi Arrivi</a></li>
+        <li><a href="#">Sale</a></li>
+        <li><a href="#">Atelier</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Assistenza</h4>
+      <ul>
+        <li><a href="#">Spedizioni & Resi</a></li>
+        <li><a href="#">Cura dei Prodotti</a></li>
+        <li><a href="#">Autenticità</a></li>
+        <li><a href="#" id="footerEmail">info@maisonelise.com</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Newsletter</h4>
+      <p style="font-size:0.72rem;color:#888;line-height:1.7;margin-bottom:1rem;">Ricevi le ultime novità e accesso esclusivo alle nuove collezioni.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="La tua email">
+        <button>→</button>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="year"></span> <span id="copyrightBrand">Maison Élise</span>. Tutti i diritti riservati.</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Termini di Servizio</a>
+      <a href="#">Cookie</a>
+      <a href="ini.html">⚙ Admin</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Config ──────────────────────────────────────────────────
+const DEFAULT_PRODUCTS=[
+  {marca:'Maison Élise',modello:'Le Sac Diamant',descrizione:'Borsa a mano in pelle di vitello nappa morbidissima, con chiusura a magnete dorata. Perfetta per occasioni speciali.',immagine:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80',prezzo:'890'},
+  {marca:'Maison Élise',modello:'Rosa Dorata',descrizione:'Mini bag iconica in pelle verniciata con dettagli hardware in oro 24k. Il pezzo iconico della stagione.',immagine:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80',prezzo:'650'},
+  {marca:'Maison Élise',modello:'Velvet Nuit',descrizione:'Clutch da sera in velluto trapuntato con chiusura a catena dorata. Design esclusivo con pattern a chevron.',immagine:'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=800&q=80',prezzo:'480'},
+  {marca:'Maison Élise',modello:'Tote Lumière',descrizione:'Shopper in pelle full-grain con manici intrecciati a mano. Capiente con fodera in seta naturale.',immagine:'https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80',prezzo:'1200'},
+  {marca:'Maison Élise',modello:'Baguette Rosé',descrizione:'Borsa a tracolla in pelle saffiano con logo ricamato e tracolla regolabile doppia.',immagine:'https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=800&q=80',prezzo:'720'},
+  {marca:'Maison Élise',modello:'Chain D\'Or',descrizione:'Shoulder bag con catena intrecciata in ottone dorato. Pelle matelassé con cuciture a rombi iconiche.',immagine:'https://images.unsplash.com/photo-1612423284934-2850a4ea6b0f?w=800&q=80',prezzo:'1450'},
+];
+
+function getCfg(){try{return JSON.parse(localStorage.getItem('ecomConfig'))||{};}catch(e){return {};}}
+
+function applyConfig(){
+  const cfg=getCfg();
+  const brand=cfg.brandName||'MAISON ÉLISE';
+  const sub=cfg.brandTagline||'Luxury Handbags';
+  document.querySelectorAll('[id^="navBrand"],[id="footerBrand"],[id="copyrightBrand"]').forEach(el=>el.textContent=brand);
+  document.querySelectorAll('.brand-sub').forEach(el=>el.textContent=sub);
+  if(cfg.heroTitle) document.getElementById('heroTitle').innerHTML=cfg.heroTitle.replace(' ','<br>');
+  if(cfg.heroSub) document.getElementById('heroSub').textContent=cfg.heroSub;
+  if(cfg.contactEmail) document.getElementById('footerEmail').textContent=cfg.contactEmail;
+  // Theme
+  if(cfg.colorPrimary) document.documentElement.style.setProperty('--gold',cfg.colorPrimary);
+  if(cfg.colorSecondary) document.documentElement.style.setProperty('--rose',cfg.colorSecondary);
+  if(cfg.colorBg) document.documentElement.style.setProperty('--light',cfg.colorBg);
+  if(cfg.colorDark) document.documentElement.style.setProperty('--dark',cfg.colorDark);
+  if(cfg.customCSS){const s=document.createElement('style');s.textContent=cfg.customCSS;document.head.appendChild(s);}
+  // Marquee spedizione
+  if(cfg.freeShipping){
+    document.querySelectorAll('.marquee-inner span').forEach(s=>{
+      if(s.textContent.includes('Spedizione')) s.textContent=`Spedizione Gratuita da €${cfg.freeShipping}`;
+    });
+  }
+}
+
+function getProducts(){
+  const cfg=getCfg();
+  if(cfg.csvData&&cfg.csvData.length){
+    const m=cfg.mapping||{};
+    return cfg.csvData.map(row=>({
+      marca:row[m.marca||'marca']||'',
+      modello:row[m.modello||'modello']||'',
+      descrizione:row[m.descrizione||'descrizione']||'',
+      immagine:row[m.immagine||'immagine']||'',
+      prezzo:row[m.prezzo||'prezzo']||'0',
+    }));
+  }
+  return DEFAULT_PRODUCTS;
+}
+
+function getCart(){try{return JSON.parse(localStorage.getItem('ecomCart'))||[];}catch(e){return [];}}
+function saveCart(cart){localStorage.setItem('ecomCart',JSON.stringify(cart));}
+
+function updateCartBadge(){
+  const count=getCart().reduce((s,i)=>s+(i.qty||1),0);
+  document.getElementById('cartBadge').textContent=count;
+}
+
+function addToCart(product){
+  const cart=getCart();
+  const key=product.modello;
+  const idx=cart.findIndex(i=>i.modello===key);
+  if(idx>-1) cart[idx].qty=(cart[idx].qty||1)+1;
+  else cart.push({...product,qty:1});
+  saveCart(cart);updateCartBadge();showToast('Aggiunto al carrello!');
+}
+
+function renderProducts(){
+  const grid=document.getElementById('productsGrid');
+  const products=getProducts();
+  const cfg=getCfg();
+  const currency=cfg.currency||'€';
+  if(!products.length){
+    grid.innerHTML=`<div class="empty-state"><div class="empty-icon">🛍️</div><h3>Nessun Prodotto</h3><p>Carica il tuo catalogo CSV dalla pagina di configurazione.</p><a href="ini.html">⚙ Configura il Catalogo</a></div>`;
+    return;
+  }
+  const tags=['Bestseller','Nuovo','Esclusivo','Limited','Bestseller'];
+  grid.innerHTML=products.map((p,i)=>{
+    const imgHtml=p.immagine
+      ?`<img class="product-img" src="${p.immagine}" alt="${p.modello}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'img-placeholder\\'><span>👜</span><span>Immagine non disponibile</span></div>'">`
+      :`<div class="img-placeholder">👜<span>Nessuna Immagine</span></div>`;
+    return `
+    <div class="product-card fade-in" style="animation-delay:${i*0.1}s" onclick="location.href='product.html?id=${i}'">
+      <div class="product-img-wrap">
+        ${imgHtml}
+        ${i<3?`<div class="product-tag">${tags[i%tags.length]}</div>`:''}
+        <div class="card-overlay">
+          <button class="card-overlay-btn" onclick="event.stopPropagation();location.href='product.html?id=${i}'">Visualizza Prodotto</button>
+        </div>
+      </div>
+      <div class="product-info">
+        <p class="product-brand">${p.marca}</p>
+        <h3 class="product-name">${p.modello}</h3>
+        <p class="product-desc">${p.descrizione}</p>
+        <div class="product-footer">
+          <div class="product-price"><sup>${currency}</sup>${parseFloat(p.prezzo).toLocaleString('it-IT',{minimumFractionDigits:0})}</div>
+          <button class="quick-add" title="Aggiungi al carrello" onclick="event.stopPropagation();addToCart(${JSON.stringify(p).replace(/"/g,'&quot;')})">🛍️</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  observeFadeIns();
+}
+
+function showToast(msg){
+  let t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.style.cssText='position:fixed;bottom:2rem;right:2rem;background:#1a1a1a;color:#c8a96e;padding:1rem 1.5rem;font-size:0.75rem;letter-spacing:0.1em;border-left:3px solid #c8a96e;transform:translateY(80px);opacity:0;transition:all 0.3s;z-index:9999;';document.body.appendChild(t);}
+  t.textContent=msg;t.style.transform='translateY(0)';t.style.opacity='1';
+  setTimeout(()=>{t.style.transform='translateY(80px)';t.style.opacity='0';},2800);
+}
+
+function observeFadeIns(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');}});
+  },{threshold:0.1});
+  document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+}
+
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>80);
+});
+
+document.getElementById('year').textContent=new Date().getFullYear();
+
+// Init
+applyConfig();
+renderProducts();
+updateCartBadge();
+setTimeout(()=>document.getElementById('loader').classList.add('hidden'),1800);
+</script>
+</body>
+</html>
