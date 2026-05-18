@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dettaglio Prodotto</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:#f5f5f5;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:30px;
+}
+
+.product{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:30px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.product img{
+    width:350px;
+    border-radius:15px;
+    object-fit:cover;
+}
+
+.info{
+    flex:1;
+}
+
+h1{
+    color:#d63384;
+}
+
+.price{
+    font-size:28px;
+    font-weight:bold;
+    margin:20px 0;
+}
+
+button{
+    padding:14px 20px;
+    border:none;
+    background:#d63384;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+button:hover{
+    background:#b0256d;
+}
+
+.cart{
+    margin-top:30px;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="product" id="product"></div>
+
+<div class="cart">
+
+<h2>Carrello</h2>
+
+<ul id="cartItems"></ul>
+
+<h3 id="total">Totale: €0</h3>
+
+<button onclick="printPDF()">
+Stampa PDF
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+const csvData = localStorage.getItem("csvData");
+
+const rows = csvData.split("\n").slice(1);
+
+const selected = localStorage.getItem("selectedProduct");
+
+const cols = rows[selected].split(",");
+
+const marca = cols[0];
+const modello = cols[1];
+const descrizione = cols[2];
+const immagine = cols[3];
+const prezzo = parseFloat(cols[4]);
+
+document.getElementById("product").innerHTML = `
+
+<img src="${immagine}">
+
+<div class="info">
+
+<h1>${marca} ${modello}</h1>
+
+<p>${descrizione}</p>
+
+<div class="price">€ ${prezzo}</div>
+
+<button onclick="addToCart()">
+Aggiungi al Carrello
+</button>
+
+</div>
+
+`;
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(){
+
+    cart.push({
+        marca,
+        modello,
+        prezzo
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    renderCart();
+}
+
+function renderCart(){
+
+    let html = "";
+
+    let total = 0;
+
+    cart.forEach(item=>{
+
+        total += item.prezzo;
+
+        html += `
+        <li>
+        ${item.marca} ${item.modello} - €${item.prezzo}
+        </li>
+        `;
+    });
+
+    document.getElementById("cartItems").innerHTML = html;
+
+    document.getElementById("total").innerText =
+    "Totale: €" + total;
+}
+
+function printPDF(){
+
+    window.print();
+}
+
+renderCart();
+
+</script>
+
+</body>
+</html>
