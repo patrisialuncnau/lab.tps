@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Prodotto</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav>
+<div>LUXE BAGS</div>
+<div>
+<a href="index.html">Home</a>
+<a href="cart.html">Carrello</a>
+</div>
+</nav>
+
+<div id="product" style="padding:40px;"></div>
+
+<script src="products.js"></script>
+
+<script>
+const id=localStorage.getItem("productId");
+const p=products.find(x=>x.id==id);
+
+document.getElementById("product").innerHTML=`
+<div style="display:flex;gap:40px;flex-wrap:wrap">
+
+<img src="${p.images[0]}" style="width:400px;border-radius:15px;">
+
+<div>
+<h1 style="color:#b08d57">${p.brand}</h1>
+<h2>${p.name}</h2>
+<p>${p.description}</p>
+
+<p><b>Materiale:</b> ${p.material}</p>
+<p><b>Colore:</b> ${p.color}</p>
+
+<h2>€ ${p.price}</h2>
+
+<button onclick="add()">Aggiungi al carrello</button>
+</div>
+</div>
+`;
+
+function add(){
+let cart=JSON.parse(localStorage.getItem("cart")||"[]");
+cart.push(p);
+localStorage.setItem("cart",JSON.stringify(cart));
+alert("Aggiunto al carrello");
+}
+</script>
+
+</body>
+</html>
