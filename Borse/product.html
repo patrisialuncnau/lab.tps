@@ -3,65 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Dettaglio Prodotto</title>
 
 <style>
-
 body{
     margin:0;
     font-family:Arial;
-    background:#f5f5f5;
+    background:#f6f1e7;
 }
 
 .container{
-    max-width:1000px;
+    max-width:1100px;
     margin:auto;
-    padding:30px;
+    padding:40px;
 }
 
 .product{
-    background:white;
-    border-radius:15px;
-    padding:20px;
     display:flex;
-    flex-wrap:wrap;
     gap:30px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
+    background:white;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
 
 .product img{
-    width:350px;
+    width:420px;
     border-radius:15px;
     object-fit:cover;
 }
 
-.info{
-    flex:1;
-}
-
 h1{
-    color:#d63384;
+    color:#b08d57;
 }
 
 .price{
-    font-size:28px;
+    font-size:24px;
     font-weight:bold;
-    margin:20px 0;
 }
 
 button{
-    padding:14px 20px;
+    padding:12px 18px;
+    background:#b08d57;
     border:none;
-    background:#d63384;
     color:white;
     border-radius:10px;
     cursor:pointer;
-    margin-right:10px;
+    margin-top:10px;
 }
 
 button:hover{
-    background:#b0256d;
+    background:#8c6f3e;
 }
 
 .cart{
@@ -69,7 +61,6 @@ button:hover{
     background:white;
     padding:20px;
     border-radius:15px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 </style>
@@ -78,104 +69,52 @@ button:hover{
 
 <div class="container">
 
-<div class="product" id="product"></div>
+<div class="product" id="p"></div>
 
 <div class="cart">
-
-<h2>Carrello</h2>
-
-<ul id="cartItems"></ul>
-
-<h3 id="total">Totale: €0</h3>
-
-<button onclick="printPDF()">
-Stampa PDF
-</button>
-
+<h2>Carrello Luxury</h2>
+<ul id="cart"></ul>
+<h3 id="total"></h3>
+<button onclick="window.print()">Stampa PDF</button>
 </div>
 
 </div>
 
 <script>
 
-const csvData = localStorage.getItem("csvData");
+let data=localStorage.getItem("csvData").split("\n").slice(1);
+let i=localStorage.getItem("selected");
 
-const rows = csvData.split("\n").slice(1);
+let c=data[i].split(",");
 
-const selected = localStorage.getItem("selectedProduct");
-
-const cols = rows[selected].split(",");
-
-const marca = cols[0];
-const modello = cols[1];
-const descrizione = cols[2];
-const immagine = cols[3];
-const prezzo = parseFloat(cols[4]);
-
-document.getElementById("product").innerHTML = `
-
-<img src="${immagine}">
-
-<div class="info">
-
-<h1>${marca} ${modello}</h1>
-
-<p>${descrizione}</p>
-
-<div class="price">€ ${prezzo}</div>
-
-<button onclick="addToCart()">
-Aggiungi al Carrello
-</button>
-
+document.getElementById("p").innerHTML=`
+<img src="${c[3]}">
+<div>
+<h1>${c[0]} ${c[1]}</h1>
+<p>${c[2]}</p>
+<div class="price">€ ${c[4]}</div>
+<button onclick="add()">Aggiungi al carrello</button>
 </div>
-
 `;
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
-function addToCart(){
-
-    cart.push({
-        marca,
-        modello,
-        prezzo
-    });
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    renderCart();
+function add(){
+cart.push({name:c[0]+" "+c[1],price:+c[4]});
+localStorage.setItem("cart",JSON.stringify(cart));
+render();
 }
 
-function renderCart(){
-
-    let html = "";
-
-    let total = 0;
-
-    cart.forEach(item=>{
-
-        total += item.prezzo;
-
-        html += `
-        <li>
-        ${item.marca} ${item.modello} - €${item.prezzo}
-        </li>
-        `;
-    });
-
-    document.getElementById("cartItems").innerHTML = html;
-
-    document.getElementById("total").innerText =
-    "Totale: €" + total;
+function render(){
+let t=0;
+document.getElementById("cart").innerHTML=cart.map(x=>{
+t+=x.price;
+return `<li>${x.name} - €${x.price}</li>`;
+}).join("");
+document.getElementById("total").innerText="Totale € "+t;
 }
 
-function printPDF(){
-
-    window.print();
-}
-
-renderCart();
+render();
 
 </script>
 
