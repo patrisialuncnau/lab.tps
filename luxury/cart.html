@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrello · MAISON ÉLISE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#c8a96e;--gold-light:#e8d5a8;--gold-pale:#f9f3e8;--rose:#c9a0a0;--rose-light:#f2e8e8;--rose-pale:#fdf6f6;--rose-deep:#a07070;--dark:#1a1a1a;--mid:#6b6b6b;--light:#f8f5f2;--white:#ffffff;--border:#e8ddd5;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:var(--light);color:var(--dark);overflow-x:hidden;min-height:100vh;}
+
+/* NAVBAR */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 4rem;display:flex;align-items:center;justify-content:space-between;height:80px;background:rgba(248,245,242,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.brand{text-decoration:none;}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;letter-spacing:0.25em;color:var(--dark);}
+.brand-sub{font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--rose);display:block;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-link{text-decoration:none;color:var(--dark);font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:500;transition:color 0.3s;}
+.nav-link:hover{color:var(--gold);}
+.nav-icons{display:flex;gap:1.5rem;}
+.nav-icon{background:none;border:none;cursor:pointer;font-size:1rem;color:var(--dark);transition:color 0.3s;}
+.nav-icon:hover{color:var(--gold);}
+
+/* PAGE */
+.page-wrap{padding:120px 6rem 5rem;display:grid;grid-template-columns:1fr 360px;gap:3rem;align-items:start;}
+.page-title-wrap{grid-column:1/-1;margin-bottom:1rem;}
+.page-title{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;}
+.page-title em{font-style:italic;color:var(--rose-deep);}
+.page-subtitle{font-size:0.72rem;color:var(--mid);letter-spacing:0.08em;margin-top:0.3rem;}
+
+/* CART ITEMS */
+.cart-items-wrap{}
+.shipping-banner{
+  display:flex;align-items:center;gap:1rem;
+  padding:1rem 1.5rem;
+  background:var(--white);border:1px solid var(--border);
+  margin-bottom:1.5rem;font-size:0.72rem;color:var(--mid);
+}
+.shipping-progress-bar{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.shipping-progress-fill{height:100%;background:linear-gradient(to right,var(--rose),var(--gold));border-radius:2px;transition:width 0.5s;}
+.shipping-icon{font-size:1.2rem;}
+
+.cart-table{width:100%;border-collapse:collapse;}
+.cart-table thead tr{border-bottom:2px solid var(--dark);}
+.cart-table th{padding:0.75rem 0;text-align:left;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--mid);font-weight:600;}
+.cart-table th:last-child{text-align:right;}
+.cart-table tbody tr{border-bottom:1px solid var(--border);transition:background 0.2s;}
+.cart-table tbody tr:hover{background:rgba(255,255,255,0.6);}
+
+.cart-product-cell{display:flex;align-items:center;gap:1.25rem;padding:1.5rem 0;}
+.cart-img{width:80px;height:80px;object-fit:cover;border:1px solid var(--border);}
+.cart-img-placeholder{width:80px;height:80px;background:linear-gradient(135deg,var(--rose-pale),var(--gold-pale));display:flex;align-items:center;justify-content:center;font-size:1.5rem;border:1px solid var(--border);}
+.cart-product-meta{}
+.cart-product-brand{font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);}
+.cart-product-name{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:400;color:var(--dark);}
+.cart-product-ref{font-size:0.62rem;color:var(--mid);letter-spacing:0.05em;}
+
+.qty-cell{padding:1.5rem 0;}
+.qty-control{display:inline-flex;align-items:center;}
+.qty-btn{width:32px;height:32px;background:none;border:1px solid var(--border);cursor:pointer;font-size:0.9rem;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
+.qty-btn:hover{background:var(--dark);border-color:var(--dark);color:var(--gold);}
+.qty-num{width:44px;height:32px;border:1px solid var(--border);border-left:none;border-right:none;text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;background:none;color:var(--dark);outline:none;}
+
+.price-cell{font-family:'Cormorant Garamond',serif;font-size:1.2rem;padding:1.5rem 0;}
+.total-cell{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;padding:1.5rem 0;text-align:right;}
+.remove-btn{background:none;border:none;cursor:pointer;color:var(--mid);font-size:0.8rem;transition:color 0.2s;padding:0.25rem;margin-top:0.4rem;display:block;}
+.remove-btn:hover{color:#c0392b;}
+
+.empty-cart{text-align:center;padding:5rem 2rem;grid-column:1/-1;}
+.empty-cart .empty-icon{font-size:4rem;margin-bottom:1rem;}
+.empty-cart h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;margin-bottom:0.5rem;}
+.empty-cart p{font-size:0.78rem;color:var(--mid);margin-bottom:2rem;}
+.btn-continue{display:inline-flex;align-items:center;gap:0.5rem;background:var(--dark);color:var(--gold);padding:1rem 2rem;font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;text-decoration:none;font-weight:600;transition:all 0.3s;}
+.btn-continue:hover{background:var(--gold);color:var(--dark);}
+
+/* ORDER SUMMARY */
+.order-summary{
+  background:var(--white);border:1px solid var(--border);
+  padding:2rem;position:sticky;top:100px;
+}
+.summary-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;font-size:0.78rem;color:var(--mid);}
+.summary-row.total{border-top:2px solid var(--dark);margin-top:0.5rem;padding-top:1rem;}
+.summary-row.total span:first-child{font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;color:var(--dark);}
+.summary-row.total span:last-child{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--dark);}
+.summary-row .free-tag{color:#27ae60;font-size:0.65rem;font-weight:600;letter-spacing:0.1em;}
+
+/* Coupon */
+.coupon-wrap{margin:1.5rem 0;padding:1.25rem;background:var(--light);border:1px solid var(--border);}
+.coupon-label{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:0.75rem;}
+.coupon-form{display:flex;gap:0;}
+.coupon-input{flex:1;padding:0.65rem 0.9rem;border:1px solid var(--border);background:var(--white);font-family:'Montserrat',sans-serif;font-size:0.75rem;outline:none;letter-spacing:0.05em;transition:border-color 0.2s;}
+.coupon-input:focus{border-color:var(--gold);}
+.coupon-btn{padding:0.65rem 1rem;background:var(--dark);color:var(--gold);border:none;cursor:pointer;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;font-family:'Montserrat',sans-serif;transition:all 0.2s;white-space:nowrap;}
+.coupon-btn:hover{background:var(--gold);color:var(--dark);}
+.coupon-success{font-size:0.7rem;color:#27ae60;margin-top:0.5rem;display:none;}
+
+/* Buttons */
+.btn-checkout{
+  width:100%;padding:1.1rem;background:var(--dark);color:var(--gold);
+  border:none;cursor:pointer;font-family:'Montserrat',sans-serif;
+  font-size:0.7rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:600;
+  transition:all 0.3s;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:center;gap:0.75rem;
+}
+.btn-checkout:hover{background:var(--gold);color:var(--dark);}
+.btn-print-pdf{
+  width:100%;padding:1rem;background:transparent;color:var(--dark);
+  border:1px solid var(--dark);cursor:pointer;font-family:'Montserrat',sans-serif;
+  font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;
+  transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:0.5rem;
+}
+.btn-print-pdf:hover{background:var(--rose-pale);border-color:var(--rose);}
+
+.trust-badges{display:flex;justify-content:center;gap:1.5rem;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);}
+.trust-item{text-align:center;font-size:0.6rem;letter-spacing:0.05em;color:var(--mid);}
+.trust-item .icon{font-size:1.1rem;display:block;margin-bottom:0.2rem;}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--dark);color:var(--gold);padding:1rem 1.5rem;font-size:0.75rem;letter-spacing:0.1em;border-left:3px solid var(--gold);transform:translateY(80px);opacity:0;transition:all 0.3s;z-index:9999;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* PRINT PDF OVERLAY */
+.pdf-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9000;align-items:center;justify-content:center;}
+.pdf-overlay.active{display:flex;}
+.pdf-modal{background:var(--white);width:min(720px,95vw);max-height:90vh;overflow-y:auto;padding:3rem;position:relative;}
+.pdf-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--mid);}
+.pdf-close:hover{color:var(--dark);}
+/* Receipt styles */
+.receipt-header{text-align:center;border-bottom:2px solid var(--dark);padding-bottom:1.5rem;margin-bottom:1.5rem;}
+.receipt-brand{font-family:'Cormorant Garamond',serif;font-size:2rem;letter-spacing:0.3em;font-weight:600;color:var(--dark);}
+.receipt-sub{font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--rose);margin-top:0.2rem;}
+.receipt-label{font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--mid);margin-top:1rem;}
+.receipt-meta{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;font-size:0.75rem;}
+.receipt-meta-item .key{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.receipt-meta-item .val{color:var(--dark);margin-top:0.2rem;}
+.receipt-table{width:100%;border-collapse:collapse;margin:1.5rem 0;}
+.receipt-table th{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);text-align:left;padding:0.5rem 0;border-bottom:1px solid var(--dark);}
+.receipt-table th:last-child{text-align:right;}
+.receipt-table td{padding:0.75rem 0;font-size:0.78rem;border-bottom:1px solid var(--border);color:var(--dark);}
+.receipt-table td:last-child{text-align:right;font-family:'Cormorant Garamond',serif;font-size:1rem;}
+.receipt-totals{border-top:2px solid var(--dark);margin-top:0.5rem;}
+.receipt-totals .row{display:flex;justify-content:space-between;padding:0.5rem 0;font-size:0.78rem;color:var(--mid);}
+.receipt-totals .row.grand{padding-top:1rem;border-top:1px solid var(--border);margin-top:0.5rem;}
+.receipt-totals .row.grand span:first-child{font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:700;color:var(--dark);}
+.receipt-totals .row.grand span:last-child{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--dark);}
+.receipt-footer{text-align:center;margin-top:2rem;font-size:0.65rem;color:var(--mid);letter-spacing:0.08em;line-height:1.8;}
+.receipt-footer .gold-line{color:var(--gold);font-weight:600;}
+.pdf-actions{display:flex;gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.pdf-actions button{flex:1;padding:0.9rem;font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all 0.3s;border:1px solid var(--dark);}
+.pdf-actions .btn-print{background:var(--dark);color:var(--gold);border-color:var(--dark);}
+.pdf-actions .btn-print:hover{background:var(--gold);color:var(--dark);}
+.pdf-actions .btn-close-modal{background:transparent;color:var(--dark);}
+.pdf-actions .btn-close-modal:hover{background:var(--dark);color:var(--white);}
+
+@media print{
+  body>*:not(.pdf-overlay){display:none!important;}
+  .pdf-overlay{display:flex!important;position:static!important;background:none!important;}
+  .pdf-modal{box-shadow:none!important;max-height:none!important;overflow:visible!important;}
+  .pdf-actions,.pdf-close{display:none!important;}
+}
+
+@media(max-width:1000px){
+  .page-wrap{grid-template-columns:1fr;padding:100px 2rem 4rem;}
+  .order-summary{position:static;}
+  .navbar{padding:0 1.5rem;}
+}
+@media(max-width:680px){
+  .nav-links{display:none;}
+  .cart-table th:nth-child(3),.cart-table td:nth-child(3){display:none;}
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="brand">
+    <div class="brand-name" id="navBrand">MAISON ÉLISE</div>
+    <span class="brand-sub">Luxury Handbags</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="nav-link">Home</a></li>
+    <li><a href="index.html#shop" class="nav-link">Shop</a></li>
+  </ul>
+  <div class="nav-icons">
+    <button class="nav-icon">👤</button>
+    <button class="nav-icon">🛍️</button>
+  </div>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+  <div class="page-title-wrap">
+    <h1 class="page-title">Il Mio <em>Carrello</em></h1>
+    <p class="page-subtitle" id="itemCount">0 articoli selezionati</p>
+  </div>
+
+  <!-- CART COL -->
+  <div id="cartCol">
+    <div class="shipping-banner" id="shippingBanner">
+      <span class="shipping-icon">🚚</span>
+      <span id="shippingMsg">Aggiungi articoli per la spedizione gratuita</span>
+      <div class="shipping-progress-bar"><div class="shipping-progress-fill" id="shippingFill" style="width:0%"></div></div>
+    </div>
+
+    <table class="cart-table" id="cartTable">
+      <thead>
+        <tr>
+          <th>Prodotto</th>
+          <th>Prezzo</th>
+          <th>Quantità</th>
+          <th>Totale</th>
+        </tr>
+      </thead>
+      <tbody id="cartBody"></tbody>
+    </table>
+
+    <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="index.html#shop" style="display:inline-flex;align-items:center;gap:0.5rem;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--mid)'">← Continua lo Shopping</a>
+      <button onclick="clearCart()" style="background:none;border:none;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);cursor:pointer;transition:color 0.3s;" onmouseover="this.style.color='#c0392b'" onmouseout="this.style.color='var(--mid)'">🗑 Svuota Carrello</button>
+    </div>
+  </div>
+
+  <!-- SUMMARY COL -->
+  <div id="summaryCol">
+    <div class="order-summary">
+      <h2 class="summary-title">Riepilogo Ordine</h2>
+      <div class="summary-row"><span>Subtotale</span><span id="subtotalVal">€0</span></div>
+      <div class="summary-row"><span>Spedizione</span><span id="shippingVal">—</span></div>
+      <div class="summary-row" id="discountRow" style="display:none;"><span>Sconto coupon</span><span id="discountVal" style="color:#27ae60;">−€0</span></div>
+      <div class="summary-row total"><span>Totale</span><span id="totalVal">€0</span></div>
+
+      <div class="coupon-wrap">
+        <p class="coupon-label">✦ Codice Sconto</p>
+        <div class="coupon-form">
+          <input class="coupon-input" type="text" id="couponInput" placeholder="Inserisci il codice">
+          <button class="coupon-btn" onclick="applyCoupon()">Applica</button>
+        </div>
+        <p class="coupon-success" id="couponSuccess"></p>
+      </div>
+
+      <button class="btn-checkout" onclick="checkout()">🔒 &nbsp; Procedi al Checkout</button>
+      <button class="btn-print-pdf" onclick="openPDFModal()">🖨️ &nbsp; Stampa / Scarica PDF</button>
+
+      <div class="trust-badges">
+        <div class="trust-item"><span class="icon">🔒</span>Sicuro</div>
+        <div class="trust-item"><span class="icon">↩️</span>30gg Resi</div>
+        <div class="trust-item"><span class="icon">✦</span>Autentico</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PDF MODAL -->
+<div class="pdf-overlay" id="pdfOverlay" onclick="if(event.target===this)closePDF()">
+  <div class="pdf-modal" id="pdfModal">
+    <button class="pdf-close" onclick="closePDF()">✕</button>
+    <div id="receiptContent"></div>
+    <div class="pdf-actions">
+      <button class="btn-print" onclick="window.print()">🖨️ Stampa / Salva PDF</button>
+      <button class="btn-close-modal" onclick="closePDF()">Chiudi</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const COUPONS={'ÉLISE10':{pct:10,label:'Élise10'},'LUXURY20':{pct:20,label:'Luxury20'},'WELCOME15':{pct:15,label:'Welcome15'}};
+
+function getCfg(){try{return JSON.parse(localStorage.getItem('ecomConfig'))||{};}catch(e){return {};}}
+function getCart(){try{return JSON.parse(localStorage.getItem('ecomCart'))||[];}catch(e){return [];}}
+function saveCart(c){localStorage.setItem('ecomCart',JSON.stringify(c));}
+
+const cfg=getCfg();
+const currency=cfg.currency||'€';
+const FREE_SHIP=cfg.freeShipping||200;
+const SHIP_COST=cfg.shippingCost||12;
+const brand=cfg.brandName||'MAISON ÉLISE';
+const brandSub=cfg.brandTagline||'Luxury Handbags';
+let discountPct=0;
+let discountLabel='';
+
+// Apply theme
+if(cfg.colorPrimary) document.documentElement.style.setProperty('--gold',cfg.colorPrimary);
+if(cfg.colorSecondary) document.documentElement.style.setProperty('--rose',cfg.colorSecondary);
+if(cfg.colorBg) document.documentElement.style.setProperty('--light',cfg.colorBg);
+
+document.getElementById('navBrand').textContent=brand;
+document.querySelectorAll('.brand-sub').forEach(el=>el.textContent=brandSub);
+
+function subtotal(){return getCart().reduce((s,i)=>s+parseFloat(i.prezzo||0)*(i.qty||1),0);}
+function shippingCost(){return subtotal()>=FREE_SHIP?0:SHIP_COST;}
+function discount(){return Math.round(subtotal()*discountPct/100*100)/100;}
+function total(){return Math.max(0,subtotal()+shippingCost()-discount());}
+
+function fmt(n){return currency+n.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2});}
+
+function updateSummary(){
+  const sub=subtotal();const ship=shippingCost();const disc=discount();const tot=total();
+  document.getElementById('subtotalVal').textContent=fmt(sub);
+  document.getElementById('shippingVal').innerHTML=ship===0?'<span class="free-tag">GRATUITA ✓</span>':fmt(ship);
+  document.getElementById('totalVal').textContent=fmt(tot);
+  const discRow=document.getElementById('discountRow');
+  discRow.style.display=discountPct>0?'flex':'none';
+  if(discountPct>0) document.getElementById('discountVal').textContent='−'+fmt(disc);
+  // Shipping progress
+  const pct=Math.min(100,(sub/FREE_SHIP)*100);
+  document.getElementById('shippingFill').style.width=pct+'%';
+  if(sub>=FREE_SHIP) document.getElementById('shippingMsg').textContent='🎉 Spedizione gratuita applicata!';
+  else document.getElementById('shippingMsg').textContent=`Mancano ${fmt(FREE_SHIP-sub)} per la spedizione gratuita`;
+}
+
+function renderCart(){
+  const cart=getCart();
+  const body=document.getElementById('cartBody');
+  const count=cart.reduce((s,i)=>s+(i.qty||1),0);
+  document.getElementById('itemCount').textContent=`${count} articol${count===1?'o':'i'} selezionat${count===1?'o':'i'}`;
+
+  if(!cart.length){
+    document.getElementById('cartCol').innerHTML=`
+      <div class="empty-cart">
+        <div class="empty-icon">🛍️</div>
+        <h2>Il tuo carrello è vuoto</h2>
+        <p>Scopri la nostra collezione e aggiungi i pezzi che ami</p>
+        <a href="index.html#shop" class="btn-continue">← Esplora la Collezione</a>
+      </div>`;
+    document.getElementById('summaryCol').style.display='none';
+    return;
+  }
+
+  body.innerHTML=cart.map((item,idx)=>`
+    <tr id="row-${idx}">
+      <td>
+        <div class="cart-product-cell">
+          ${item.immagine
+            ?`<img class="cart-img" src="${item.immagine}" alt="${item.modello}" onerror="this.className='cart-img-placeholder';this.innerHTML='👜';this.onerror=null;">`
+            :`<div class="cart-img-placeholder">👜</div>`}
+          <div class="cart-product-meta">
+            <div class="cart-product-brand">${item.marca}</div>
+            <div class="cart-product-name">${item.modello}</div>
+            <div class="cart-product-ref">REF-${String(idx+1).padStart(4,'0')}</div>
+            <button class="remove-btn" onclick="removeItem(${idx})">✕ Rimuovi</button>
+          </div>
+        </div>
+      </td>
+      <td class="price-cell">${currency}${parseFloat(item.prezzo).toLocaleString('it-IT',{minimumFractionDigits:2})}</td>
+      <td class="qty-cell">
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
+          <input class="qty-num" type="number" value="${item.qty||1}" min="1" max="10" onchange="setQty(${idx},this.value)">
+          <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
+        </div>
+      </td>
+      <td class="total-cell">${currency}${(parseFloat(item.prezzo)*(item.qty||1)).toLocaleString('it-IT',{minimumFractionDigits:2})}</td>
+    </tr>
+  `).join('');
+  updateSummary();
+}
+
+function changeQty(idx,delta){
+  const cart=getCart();
+  cart[idx].qty=Math.max(1,Math.min(10,(cart[idx].qty||1)+delta));
+  saveCart(cart);renderCart();
+}
+function setQty(idx,val){
+  const cart=getCart();
+  cart[idx].qty=Math.max(1,Math.min(10,parseInt(val)||1));
+  saveCart(cart);renderCart();
+}
+function removeItem(idx){
+  const cart=getCart();cart.splice(idx,1);saveCart(cart);renderCart();showToast('Articolo rimosso');
+}
+function clearCart(){
+  if(!confirm('Svuotare il carrello?')) return;
+  saveCart([]);renderCart();showToast('Carrello svuotato');
+}
+
+function applyCoupon(){
+  const code=document.getElementById('couponInput').value.trim().toUpperCase();
+  const success=document.getElementById('couponSuccess');
+  if(COUPONS[code]){
+    discountPct=COUPONS[code].pct;discountLabel=COUPONS[code].label;
+    success.style.display='block';
+    success.textContent=`✓ Codice "${code}" applicato! Sconto del ${discountPct}%`;
+    updateSummary();showToast(`✓ Sconto ${discountPct}% applicato!`);
+  } else {
+    success.style.display='block';success.style.color='#c0392b';
+    success.textContent='Codice non valido. Prova: ÉLISE10, LUXURY20, WELCOME15';
+    setTimeout(()=>{success.style.display='none';success.style.color='#27ae60';},3000);
+  }
+}
+
+function checkout(){
+  if(!getCart().length){showToast('Il carrello è vuoto');return;}
+  openPDFModal();
+}
+
+function openPDFModal(){
+  const cart=getCart();
+  if(!cart.length){showToast('Il carrello è vuoto');return;}
+  const now=new Date();
+  const orderNum='ME'+Date.now().toString().slice(-8);
+  const sub=subtotal();const ship=shippingCost();const disc=discount();const tot=total();
+
+  document.getElementById('receiptContent').innerHTML=`
+    <div class="receipt-header">
+      <div class="receipt-brand">${brand}</div>
+      <div class="receipt-sub">${brandSub}</div>
+      <div class="receipt-label">Riepilogo Ordine · Ricevuta</div>
+    </div>
+    <div class="receipt-meta">
+      <div class="receipt-meta-item"><div class="key">Numero Ordine</div><div class="val">#${orderNum}</div></div>
+      <div class="receipt-meta-item"><div class="key">Data</div><div class="val">${now.toLocaleDateString('it-IT',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div></div>
+      <div class="receipt-meta-item"><div class="key">Ora</div><div class="val">${now.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})}</div></div>
+      <div class="receipt-meta-item"><div class="key">Articoli</div><div class="val">${cart.reduce((s,i)=>s+(i.qty||1),0)} prodotti</div></div>
+    </div>
+    <table class="receipt-table">
+      <thead><tr><th>Prodotto</th><th>Qta</th><th>Prezzo Unit.</th><th>Totale</th></tr></thead>
+      <tbody>
+        ${cart.map(item=>`
+          <tr>
+            <td>
+              <strong style="font-family:'Cormorant Garamond',serif;font-size:1rem;">${item.modello}</strong><br>
+              <span style="font-size:0.65rem;color:var(--mid);letter-spacing:0.1em;">${item.marca}</span>
+            </td>
+            <td style="text-align:center;">${item.qty||1}</td>
+            <td>${currency}${parseFloat(item.prezzo).toLocaleString('it-IT',{minimumFractionDigits:2})}</td>
+            <td>${currency}${(parseFloat(item.prezzo)*(item.qty||1)).toLocaleString('it-IT',{minimumFractionDigits:2})}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+    <div class="receipt-totals">
+      <div class="row"><span>Subtotale</span><span>${fmt(sub)}</span></div>
+      <div class="row"><span>Spedizione</span><span>${ship===0?'GRATUITA':fmt(ship)}</span></div>
+      ${discountPct>0?`<div class="row"><span>Sconto (${discountLabel} −${discountPct}%)</span><span style="color:#27ae60;">−${fmt(disc)}</span></div>`:''}
+      <div class="row grand"><span>TOTALE DA PAGARE</span><span>${fmt(tot)}</span></div>
+    </div>
+    <div class="receipt-footer">
+      <p class="gold-line">✦ Grazie per aver scelto ${brand} ✦</p>
+      <p>Artigianato di lusso · Autenticità garantita · Resi gratuiti entro 30 giorni</p>
+      <p style="margin-top:0.5rem;">${cfg.contactEmail||'info@maisonelise.com'} · www.maisonelise.com</p>
+      <p style="margin-top:0.75rem;color:#bbb;">Questo documento non costituisce fattura fiscale.</p>
+    </div>
+  `;
+  document.getElementById('pdfOverlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function closePDF(){
+  document.getElementById('pdfOverlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+renderCart();
+</script>
+</body>
+</html>
