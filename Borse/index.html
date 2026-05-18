@@ -3,150 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catalogo Borse</title>
+<title>Boutique Luxury Bags</title>
 
 <style>
-
 body{
     margin:0;
     font-family:Arial;
-    background:#fafafa;
+    background:#f6f1e7;
 }
 
 header{
-    background:#d63384;
-    color:white;
-    padding:20px;
+    background:#111;
+    color:#d4af37;
     text-align:center;
+    padding:25px;
+    font-size:22px;
+    letter-spacing:3px;
 }
 
-.container{
+.grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-    padding:30px;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+    padding:40px;
 }
 
 .card{
     background:white;
-    border-radius:15px;
+    border-radius:18px;
     overflow:hidden;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
     transition:0.3s;
 }
 
 .card:hover{
-    transform:scale(1.03);
+    transform:translateY(-8px);
 }
 
 .card img{
     width:100%;
-    height:250px;
+    height:260px;
     object-fit:cover;
 }
 
-.card-content{
+.content{
     padding:15px;
 }
 
-.card h2{
-    margin:0;
-    color:#d63384;
+.brand{
+    color:#b08d57;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.model{
+    font-size:16px;
+    margin:5px 0;
 }
 
 .price{
-    font-size:20px;
+    font-size:18px;
     font-weight:bold;
-    margin:10px 0;
+    color:#111;
 }
 
 button{
     width:100%;
     padding:12px;
-    border:none;
-    background:#d63384;
+    background:#b08d57;
     color:white;
+    border:none;
     border-radius:10px;
     cursor:pointer;
+    margin-top:10px;
 }
 
 button:hover{
-    background:#b0256d;
+    background:#8c6f3e;
 }
-
 </style>
 </head>
 <body>
 
-<header>
-<h1 id="shopTitle">Luxury Bags</h1>
-</header>
+<header id="title">LUXURY BOUTIQUE</header>
 
-<div class="container" id="products"></div>
+<div class="grid" id="grid"></div>
 
 <script>
+const config = JSON.parse(localStorage.getItem("config")) || {csv:"borse.csv",shop:"Luxury Boutique"};
 
-const config = JSON.parse(localStorage.getItem("config")) || {
-    csv:"borse.csv",
-    shop:"Luxury Bags"
-};
-
-document.getElementById("shopTitle").innerText = config.shop;
+document.getElementById("title").innerText = config.shop;
 
 fetch(config.csv)
-.then(response => response.text())
-.then(data => {
+.then(r=>r.text())
+.then(data=>{
 
-    const rows = data.split("\n").slice(1);
+let rows = data.split("\n").slice(1);
+let html="";
 
-    let output = "";
+rows.forEach((r,i)=>{
+let c=r.split(",");
 
-    rows.forEach((row,index)=>{
-
-        const cols = row.split(",");
-
-        const marca = cols[0];
-        const modello = cols[1];
-        const descrizione = cols[2];
-        const immagine = cols[3];
-        const prezzo = cols[4];
-
-        output += `
-        <div class="card">
-
-            <img src="${immagine}" alt="${modello}">
-
-            <div class="card-content">
-
-                <h2>${marca}</h2>
-
-                <p>${modello}</p>
-
-                <div class="price">€ ${prezzo}</div>
-
-                <button onclick="openProduct(${index})">
-                Vedi Dettagli
-                </button>
-
-            </div>
-
-        </div>
-        `;
-    });
-
-    document.getElementById("products").innerHTML = output;
-
-    localStorage.setItem("csvData", data);
-
+html+=`
+<div class="card">
+<img src="${c[3]}">
+<div class="content">
+<div class="brand">${c[0]}</div>
+<div class="model">${c[1]}</div>
+<div class="price">€ ${c[4]}</div>
+<button onclick="openP(${i})">Dettagli</button>
+</div>
+</div>`;
 });
 
-function openProduct(index){
+document.getElementById("grid").innerHTML=html;
+localStorage.setItem("csvData",data);
+});
 
-    localStorage.setItem("selectedProduct", index);
-
-    window.location.href = "product.html";
+function openP(i){
+localStorage.setItem("selected",i);
+location.href="product.html";
 }
-
 </script>
 
 </body>
