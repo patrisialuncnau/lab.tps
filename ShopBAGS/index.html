@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Boutique Luxury Bags</title>
+<title>Luxury Bags</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <nav>
-<div>LUXE BAGS</div>
+<div>LUXURY BAGS</div>
 <div>
 <a href="index.html">Home</a>
 <a href="cart.html">Carrello</a>
@@ -16,10 +16,13 @@
 </nav>
 
 <div class="hero">
-Eleganza senza tempo<br>Collezione Luxury Bags
+Eleganza senza tempo<br>
+Collezione Exclusive Bags
 </div>
 
-<h2 style="padding:20px 40px;">Prodotti in evidenza</h2>
+<h2 style="padding:30px 50px;font-style:italic;">
+Collezione in evidenza
+</h2>
 
 <div class="grid" id="grid"></div>
 
@@ -40,12 +43,12 @@ grid.innerHTML+=`
 <div class="brand">${p.brand}</div>
 <h3>${p.name}</h3>
 <p>€ ${p.price}</p>
-<button onclick="openProduct(${p.id})">Visualizza prodotto</button>
+<button onclick="openP(${p.id})">Visualizza prodotto</button>
 </div>
 </div>`;
 });
 
-function openProduct(id){
+function openP(id){
 localStorage.setItem("productId",id);
 location.href="product.html";
 }
