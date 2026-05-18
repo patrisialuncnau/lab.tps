@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Prodotto</title>
+<title>Prodotto Luxury</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <nav>
-<div>LUXE BAGS</div>
+<div>LUXURY BAGS</div>
 <div>
 <a href="index.html">Home</a>
 <a href="cart.html">Carrello</a>
 </div>
 </nav>
 
-<div id="product" style="padding:40px;"></div>
+<div id="product" style="padding:50px;"></div>
 
 <script src="products.js"></script>
 
@@ -24,13 +24,15 @@ const id=localStorage.getItem("productId");
 const p=products.find(x=>x.id==id);
 
 document.getElementById("product").innerHTML=`
-<div style="display:flex;gap:40px;flex-wrap:wrap">
+<div style="display:flex;gap:50px;flex-wrap:wrap">
 
-<img src="${p.images[0]}" style="width:400px;border-radius:15px;">
+<img src="${p.images[0]}" style="width:420px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2);">
 
-<div>
+<div style="font-style:italic">
+
 <h1 style="color:#b08d57">${p.brand}</h1>
 <h2>${p.name}</h2>
+
 <p>${p.description}</p>
 
 <p><b>Materiale:</b> ${p.material}</p>
@@ -39,6 +41,8 @@ document.getElementById("product").innerHTML=`
 <h2>€ ${p.price}</h2>
 
 <button onclick="add()">Aggiungi al carrello</button>
+<button onclick="buy()">Compra ora</button>
+
 </div>
 </div>
 `;
@@ -48,6 +52,10 @@ let cart=JSON.parse(localStorage.getItem("cart")||"[]");
 cart.push(p);
 localStorage.setItem("cart",JSON.stringify(cart));
 alert("Aggiunto al carrello");
+}
+
+function buy(){
+alert("Checkout simulato luxury");
 }
 </script>
 
