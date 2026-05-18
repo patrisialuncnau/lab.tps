@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Carrello</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<nav>
+<div>LUXE BAGS</div>
+<div>
+<a href="index.html">Home</a>
+</div>
+</nav>
+
+<div style="padding:40px">
+<h1>Carrello</h1>
+
+<div id="cart"></div>
+
+<h2 id="total"></h2>
+
+<p style="color:green">
+Spedizione gratuita sopra €200
+</p>
+
+<button onclick="alert('Checkout simulato')">
+Procedi al checkout
+</button>
+</div>
+
+<script>
+let cart=JSON.parse(localStorage.getItem("cart")||"[]");
+
+let total=0;
+
+document.getElementById("cart").innerHTML=cart.map(p=>{
+total+=p.price;
+return `<div style="background:white;padding:10px;margin:10px 0;border-radius:10px">
+${p.name} - €${p.price}
+</div>`;
+}).join("");
+
+document.getElementById("total").innerText="Totale: € "+total;
+</script>
+
+</body>
+</html>
