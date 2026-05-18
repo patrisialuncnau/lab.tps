@@ -3,98 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Configurazione CSV</title>
+<title>Config Boutique</title>
 
 <style>
 body{
-    font-family: Arial, sans-serif;
-    background:#f5f5f5;
     margin:0;
-    padding:40px;
+    font-family:Arial;
+    background:#f6f1e7;
 }
 
-.container{
-    max-width:700px;
-    margin:auto;
+.box{
+    max-width:600px;
+    margin:80px auto;
     background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 0 15px rgba(0,0,0,0.1);
+    padding:40px;
+    border-radius:18px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    border:1px solid #d4af37;
 }
 
 h1{
     text-align:center;
-    color:#d63384;
+    color:#b08d57;
+    letter-spacing:2px;
 }
 
 input{
     width:100%;
-    padding:12px;
+    padding:14px;
     margin:10px 0;
+    border:1px solid #d4af37;
     border-radius:10px;
-    border:1px solid #ccc;
 }
 
 button{
     width:100%;
     padding:14px;
-    border:none;
-    background:#d63384;
+    background:#b08d57;
     color:white;
-    font-size:16px;
+    border:none;
     border-radius:10px;
+    font-weight:bold;
     cursor:pointer;
 }
 
 button:hover{
-    background:#b0256d;
-}
-
-.info{
-    margin-top:20px;
-    background:#ffe6f2;
-    padding:15px;
-    border-radius:10px;
+    background:#8c6f3e;
 }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="box">
+<h1>LUXURY BAGS CONFIG</h1>
 
-<h1>Configurazione Piattaforma</h1>
+<input id="csv" value="borse.csv">
+<input id="shop" value="Luxury Boutique">
 
-<label>Nome file CSV</label>
-<input type="text" id="csvFile" value="borse.csv">
-
-<label>Nome negozio</label>
-<input type="text" id="shopName" value="Luxury Bags">
-
-<button onclick="saveConfig()">Salva Configurazione</button>
-
-<div class="info">
-<p><strong>Campi richiesti nel CSV:</strong></p>
-<ul>
-<li>marca</li>
-<li>modello</li>
-<li>descrizione</li>
-<li>immagine</li>
-<li>prezzo</li>
-</ul>
-</div>
+<button onclick="save()">Salva Configurazione</button>
 </div>
 
 <script>
-function saveConfig(){
-
-    const config = {
-        csv: document.getElementById("csvFile").value,
-        shop: document.getElementById("shopName").value
-    };
-
-    localStorage.setItem("config", JSON.stringify(config));
-
-    alert("Configurazione salvata!");
+function save(){
+    localStorage.setItem("config", JSON.stringify({
+        csv:document.getElementById("csv").value,
+        shop:document.getElementById("shop").value
+    }));
+    alert("Configurazione salvata");
 }
 </script>
 
