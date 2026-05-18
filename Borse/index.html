@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalogo Borse</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:#fafafa;
+}
+
+header{
+    background:#d63384;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:30px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.03);
+}
+
+.card img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:15px;
+}
+
+.card h2{
+    margin:0;
+    color:#d63384;
+}
+
+.price{
+    font-size:20px;
+    font-weight:bold;
+    margin:10px 0;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:#d63384;
+    color:white;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#b0256d;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+<h1 id="shopTitle">Luxury Bags</h1>
+</header>
+
+<div class="container" id="products"></div>
+
+<script>
+
+const config = JSON.parse(localStorage.getItem("config")) || {
+    csv:"borse.csv",
+    shop:"Luxury Bags"
+};
+
+document.getElementById("shopTitle").innerText = config.shop;
+
+fetch(config.csv)
+.then(response => response.text())
+.then(data => {
+
+    const rows = data.split("\n").slice(1);
+
+    let output = "";
+
+    rows.forEach((row,index)=>{
+
+        const cols = row.split(",");
+
+        const marca = cols[0];
+        const modello = cols[1];
+        const descrizione = cols[2];
+        const immagine = cols[3];
+        const prezzo = cols[4];
+
+        output += `
+        <div class="card">
+
+            <img src="${immagine}" alt="${modello}">
+
+            <div class="card-content">
+
+                <h2>${marca}</h2>
+
+                <p>${modello}</p>
+
+                <div class="price">€ ${prezzo}</div>
+
+                <button onclick="openProduct(${index})">
+                Vedi Dettagli
+                </button>
+
+            </div>
+
+        </div>
+        `;
+    });
+
+    document.getElementById("products").innerHTML = output;
+
+    localStorage.setItem("csvData", data);
+
+});
+
+function openProduct(index){
+
+    localStorage.setItem("selectedProduct", index);
+
+    window.location.href = "product.html";
+}
+
+</script>
+
+</body>
+</html>
