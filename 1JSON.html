@@ -1,1 +1,43 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <table id="tabella">
+    <tr>
+      <th>Nome</th>
+      <th>Cognome</th>
+      <th>Età</th>
+      <th>Sport</th>
+    </tr>
+  </table>
+  <script>
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", "dati.json", true);
+    xmlhttp.onload = function() {
+      let dati = JSON.parse(xmlhttp.responseText);
+      let tabella = document.getElementById("tabella");
+      for (let persona of dati) {
+        tabella.innerHTML +=
+          "<tr>" +
+          "<td>" + persona.nome + "</td>" +
+          "<td>" + persona.cognome + "</td>" +
+          "<td>" + persona.eta + "</td>" +
+          "<td>" + persona.sport.join(", ") + "</td>" +
+          "</tr>";
+      }
+    };
+    xmlhttp.send();
+  </script>
+</body>
+</html>
