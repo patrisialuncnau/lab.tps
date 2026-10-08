@@ -20,22 +20,26 @@
       <th>Età</th>
       <th>Sport</th>
     </tr>
+    <tr>
+      <td><input type="text" id="nome"></td>
+      <td><input type="text" id="cognome"></td>
+      <td><input type="number" id="eta"></td>
+      <td>
+        <select id="sport">
+          <option>Pallavolo</option>
+          <option>Calcio</option>
+          <option>Basket</option>
+          <option>Nuoto</option>
+          <option>Disoccupato</option>
+        </select>
+      </td>
+    </tr>
   </table>
   <script>
     let xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", "dati.json", true);
     xmlhttp.onload = function() {
       let dati = JSON.parse(xmlhttp.responseText);
-      let tabella = document.getElementById("tabella");
-      for (let persona of dati) {
-        tabella.innerHTML +=
-          "<tr>" +
-          "<td>" + persona.nome + "</td>" +
-          "<td>" + persona.cognome + "</td>" +
-          "<td>" + persona.eta + "</td>" +
-          "<td>" + persona.sport.join(", ") + "</td>" +
-          "</tr>";
-      }
     };
     xmlhttp.send();
   </script>
