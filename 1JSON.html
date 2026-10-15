@@ -37,12 +37,17 @@
     </tr>
   </table>
   <script>
-    let xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", "dati.json", true);
-    xmlhttp.onload = function() {
-      let dati = JSON.parse(xmlhttp.responseText);
-    };
-    xmlhttp.send();
+    var stringaJson = `{
+      "nome": "Mario",
+      "cognome": "Rossi",
+      "eta": 25,
+      "sport": "Calcio"
+    }`; 
+    var dati = JSON.parse(stringaJson);
+    document.getElementById("nome").value = dati.nome;
+    document.getElementById("cognome").value = dati.cognome;
+    document.getElementById("eta").value = dati.eta;
+    document.getElementById("sport").value = dati.sport;
   </script>
 </body>
 </html>
