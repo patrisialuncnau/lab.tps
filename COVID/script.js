@@ -47,12 +47,7 @@ async function caricaDati() {
       });
       corpoDati.appendChild(riga);
     });
-
     stato.style.display = "none";
-
-  } catch (errore) {
-    stato.textContent = "Impossibile caricare i dati. Controlla la connessione e riprova.";
-    console.error("Errore durante il caricamento del JSON:", errore);
-  }
+  } 
 }
 caricaDati();
