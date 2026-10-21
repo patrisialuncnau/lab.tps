@@ -47,8 +47,9 @@ async function caricaDati() {
       });
       corpoDati.appendChild(riga);
     });
-    stato.textContent = "Dati caricati: " + dati.length + " rilevamenti. " +
-      "La tabella mostra i 20 più recenti.";
+
+    stato.style.display = "none";
+
   } catch (errore) {
     stato.textContent = "Impossibile caricare i dati. Controlla la connessione e riprova.";
     console.error("Errore durante il caricamento del JSON:", errore);
