@@ -1,53 +1,41 @@
-const url = "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json";
-
-const colonne = [
-  "data",
-  "nuovi_positivi",
-  "terapia_intensiva",
-  "ricoverati_con_sintomi",
-  "dimessi_guariti",
-  "deceduti",
-  "totale_casi"
-];
-async function caricaDati() {
-  const stato = document.getElementById("stato");
-  try {
-    const risposta = await fetch(url);
-    if (!risposta.ok) {
-      throw new Error("Risposta HTTP " + risposta.status);
+var url = "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-andamento-nazionale.json";
+var richiesta = new XMLHttpRequest();
+richiesta.open("GET", url, true);
+richiesta.onreadystatechange = function () {
+  if (richiesta.readyState == 4 && richiesta.status == 200) {
+    var dati = JSON.parse(richiesta.responseText);
+    var chiavi = Object.keys(dati[0]);
+    var colonne = ["data", "nuovi_positivi", "terapia_intensiva", "deceduti", "totale_casi"];
+    var testoChiavi = "";
+    var intestazione = "<tr>";
+    var righe = "";
+    var i;
+    var j;
+    // Stampa tutte le chiavi del JSON.
+    for (i = 0; i < chiavi.length; i++) {
+      testoChiavi += "<tr><td>" + chiavi[i] + "</td></tr>";
     }
-    const dati = await risposta.json();
-
-    const chiavi = Object.keys(dati[0]);
-    const corpoChiavi = document.getElementById("tabella-chiavi");
-    chiavi.forEach(function (chiave) {
-      const riga = document.createElement("tr");
-      const cella = document.createElement("td");
-      cella.textContent = chiave;
-      riga.appendChild(cella);
-      corpoChiavi.appendChild(riga);
-    });
-    const intestazione = document.getElementById("intestazione-dati");
-    const rigaIntestazione = document.createElement("tr");
-    colonne.forEach(function (colonna) {
-      const th = document.createElement("th");
-      th.textContent = colonna;
-      rigaIntestazione.appendChild(th);
-    });
-    intestazione.appendChild(rigaIntestazione);
-
-    const ultimiDati = dati.slice(-20).reverse();
-    const corpoDati = document.getElementById("tabella-dati");
-    ultimiDati.forEach(function (elemento) {
-      const riga = document.createElement("tr");
-      colonne.forEach(function (colonna) {
-        const cella = document.createElement("td");
-        cella.textContent = elemento[colonna] ?? "-";
-        riga.appendChild(cella);
-      });
-      corpoDati.appendChild(riga);
-    });
-    stato.style.display = "none";
-  } 
-}
-caricaDati();
+    document.getElementById("tabella-chiavi").innerHTML = testoChiavi;
+    // Crea l'intestazione della tabella dei dati.
+    for (i = 0; i < colonne.length; i++) {
+      intestazione += "<th>" + colonne[i] + "</th>";
+    }
+    intestazione += "</tr>";
+    document.getElementById("intestazione-dati").innerHTML = intestazione;
+    // Stampa gli ultimi 20 rilevamenti.
+    for (i = dati.length - 1; i >= 0 && i >= dati.length - 20; i--) {
+      righe += "<tr>";
+      for (j = 0; j < colonne.length; j++) {
+        if (dati[i][colonne[j]] == null) {
+          righe += "<td>-</td>";
+        } else {
+          righe += "<td>" + dati[i][colonne[j]] + "</td>";
+        }
+      }
+      righe += "</tr>";
+    }
+    document.getElementById("tabella-dati").innerHTML = righe;
+    document.getElementById("stato").innerHTML = "Dati caricati correttamente.";
+  }
+};
+richiesta.send();
